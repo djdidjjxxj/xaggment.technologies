@@ -5,11 +5,11 @@ import svgr from "vite-plugin-svgr";
 import path from "path";
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
     base: "/xaggment.technologies/",
     plugins: [
         react(),
-        miaodaDevPlugin(),
+        command === "serve" && miaodaDevPlugin(),
         svgr({
             svgrOptions: {
                 icon: true,
@@ -17,10 +17,10 @@ export default defineConfig({
                 namedExport: "ReactComponent",
             },
         }),
-    ],
+    ].filter(Boolean),
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),
         },
     },
-});
+}));
