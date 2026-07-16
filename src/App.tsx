@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import IntersectObserver from '@/components/common/IntersectObserver';
 import { Toaster } from '@/components/ui/sonner';
@@ -12,11 +12,18 @@ import { routes } from './routes';
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
 
+    // Safety net: always show content after 4 seconds even if Loader animation fails
+    useEffect(() => {
+        const fallback = setTimeout(() => setLoading(false), 4000);
+        return () => clearTimeout(fallback);
+    }, []);
+
     return (
         <Router basename="/xaggment.technologies">
             {loading && <Loader onComplete={() => setLoading(false)} />}
             <IntersectObserver />
-            <div className={`flex flex-col min-h-screen ${loading ? 'opacity-0' : 'opacity-100 transition-opacity duration-1000'}`}>
+            {/* Content is always rendered; Loader is a fixed overlay on top */}
+            <div className={`flex flex-col min-h-screen transition-opacity duration-700 ${loading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <Header />
                 <main className="flex-grow">
                     <Routes>

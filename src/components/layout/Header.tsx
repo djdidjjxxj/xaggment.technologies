@@ -14,10 +14,10 @@ import {
 const navItems = [
     { name: 'Home', href: '/', isRoute: true },
     { name: 'Prebuilt', href: 'services' },
-    { name: 'Customized', href: 'services' },
-    { name: 'Pricing', href: '/pricing', isRoute: true },
+    { name: 'Customized', href: 'custom-development' },
+    { name: 'Pricing', href: 'website-development' },
     { name: 'About Us', href: 'team' },
-    { name: 'Contact Us', href: 'cta' },
+    { name: 'Contact Us', href: 'contact' },
 ];
 
 const Header: React.FC = () => {
@@ -35,17 +35,30 @@ const Header: React.FC = () => {
     }, []);
 
     const handleNavigation = (href: string, isRoute?: boolean) => {
+        setIsOpen(false);
         if (isRoute) {
             navigate(href);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             if (location.pathname !== '/') {
+                // Navigate home first, then wait for DOM to render before scrolling
                 navigate('/');
-                setTimeout(() => scrollToSection(href), 100);
+                // Poll until the section exists, up to 2s
+                let attempts = 0;
+                const poll = setInterval(() => {
+                    const el = document.getElementById(href);
+                    if (el) {
+                        clearInterval(poll);
+                        const offset = 100;
+                        const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top: pos, behavior: 'smooth' });
+                    }
+                    if (++attempts > 20) clearInterval(poll);
+                }, 100);
             } else {
                 scrollToSection(href);
             }
         }
-        setIsOpen(false);
     };
 
     const scrollToSection = (id: string) => {
@@ -81,13 +94,13 @@ const Header: React.FC = () => {
                         Prebuilt
                     </button>
                     <button
-                        onClick={() => handleNavigation('services')}
+                        onClick={() => handleNavigation('custom-development')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors"
                     >
                         Customized
                     </button>
                     <button
-                        onClick={() => handleNavigation('/pricing', true)}
+                        onClick={() => handleNavigation('website-development')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors"
                     >
                         Pricing
@@ -114,7 +127,7 @@ const Header: React.FC = () => {
                         About Us
                     </button>
                     <button
-                        onClick={() => handleNavigation('cta')}
+                        onClick={() => handleNavigation('contact')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors whitespace-nowrap"
                     >
                         Contact Us
