@@ -14,21 +14,56 @@ interface BlogPost {
     published_at: string;
 }
 
+const mockPosts = [
+    {
+        id: '1',
+        title: 'Building Scalable AI Automation Workflows',
+        excerpt: 'Learn how to integrate AI agents into your business processes to save time, reduce error rates, and streamline operation efficiency.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=600&auto=format&fit=crop',
+        author: 'Kaustav',
+        published_at: new Date().toISOString()
+    },
+    {
+        id: '2',
+        title: 'The Future of SaaS in 2026',
+        excerpt: 'An in-depth look at emerging software architectures, microservices, and how prebuilt platforms can accelerate your startup launch.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
+        author: 'Alex Johnson',
+        published_at: new Date(Date.now() - 86400000 * 2).toISOString()
+    },
+    {
+        id: '3',
+        title: 'A Beginners Guide to Creator Growth',
+        excerpt: 'Discover the marketing channels, design languages, and content pipelines that successful creators use to scale their reach rapidly.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop',
+        author: 'Sarah Smith',
+        published_at: new Date(Date.now() - 86400000 * 5).toISOString()
+    }
+];
+
 const Blog: React.FC = () => {
     const [posts, setPosts] = useState<BlogPost[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const { data, error } = await supabase
-                .from('blog_posts')
-                .select('*')
-                .order('published_at', { ascending: false });
+            try {
+                const { data, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .order('published_at', { ascending: false });
 
-            if (!error && data) {
-                setPosts(data);
+                if (!error && data && data.length > 0) {
+                    setPosts(data);
+                } else {
+                    setPosts(mockPosts);
+                }
+            } catch (err) {
+                console.warn('Supabase fetch failed, using fallback mock blog data', err);
+                setPosts(mockPosts);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
 
         fetchPosts();

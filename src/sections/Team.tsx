@@ -9,21 +9,56 @@ interface Member {
     image_url: string;
 }
 
+const mockMembers = [
+    {
+        id: '1',
+        name: 'Kaustav',
+        role: 'Founder & CEO',
+        image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop'
+    },
+    {
+        id: '2',
+        name: 'Alex Johnson',
+        role: 'Lead Architect',
+        image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500&auto=format&fit=crop'
+    },
+    {
+        id: '3',
+        name: 'Sarah Smith',
+        role: 'UI/UX Director',
+        image_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=500&auto=format&fit=crop'
+    },
+    {
+        id: '4',
+        name: 'David Lee',
+        role: 'Digital Marketing Lead',
+        image_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=500&auto=format&fit=crop'
+    }
+];
+
 const Team: React.FC = () => {
     const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchMembers = async () => {
-            const { data, error } = await supabase
-                .from('team_members')
-                .select('*')
-                .order('order_index', { ascending: true });
+            try {
+                const { data, error } = await supabase
+                    .from('team_members')
+                    .select('*')
+                    .order('order_index', { ascending: true });
 
-            if (!error && data) {
-                setMembers(data);
+                if (!error && data && data.length > 0) {
+                    setMembers(data);
+                } else {
+                    setMembers(mockMembers);
+                }
+            } catch (err) {
+                console.warn('Supabase fetch failed, using fallback mock team data', err);
+                setMembers(mockMembers);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
 
         fetchMembers();

@@ -16,6 +16,36 @@ interface BlogPost {
     published_at: string;
 }
 
+const mockPosts = [
+    {
+        id: '1',
+        title: 'Building Scalable AI Automation Workflows',
+        excerpt: 'Learn how to integrate AI agents into your business processes to save time, reduce error rates, and streamline operation efficiency.',
+        content: 'AI is redefining how businesses operate. From automating customer support to optimizing supply chain logistics, intelligent agents can handle complex tasks faster and with lower error rates than traditional manual workflows.\n\nBy leveraging tools like LangChain, custom GPT agents, and workflow builders like Make or n8n, developers can design autonomous workflows that orchestrate tasks across multiple APIs.\n\nIn this article, we outline the exact step-by-step process of designing, testing, and deploying custom AI agent scripts in production environments.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=600&auto=format&fit=crop',
+        author: 'Kaustav',
+        published_at: new Date().toISOString()
+    },
+    {
+        id: '2',
+        title: 'The Future of SaaS in 2026',
+        excerpt: 'An in-depth look at emerging software architectures, microservices, and how prebuilt platforms can accelerate your startup launch.',
+        content: 'In 2026, software development is highly commoditized. Building a startup from scratch no longer takes months; instead, founders are utilizing robust prebuilt boilerplate architectures and templates to launch within days.\n\nThis article reviews the main architectural styles used by modern fast-scaling startups, including Next.js, serverless database adapters, and unified identity backends. We highlight how to select the best tech stack for rapid product development.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
+        author: 'Alex Johnson',
+        published_at: new Date(Date.now() - 86400000 * 2).toISOString()
+    },
+    {
+        id: '3',
+        title: 'A Beginners Guide to Creator Growth',
+        excerpt: 'Discover the marketing channels, design languages, and content pipelines that successful creators use to scale their reach rapidly.',
+        content: 'Scaling an online audience requires consistency and structured workflows. The creators who succeed are those who treat their platform like a product development cycle.\n\nFrom automated rendering of vertical video reels to high-converting landing pages, this guide explores the essential stack of growth tools, SEO best practices, and distribution strategies that you can implement starting today.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop',
+        author: 'Sarah Smith',
+        published_at: new Date(Date.now() - 86400000 * 5).toISOString()
+    }
+];
+
 const BlogDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -25,16 +55,26 @@ const BlogDetail: React.FC = () => {
     useEffect(() => {
         const fetchPost = async () => {
             if (!id) return;
-            const { data, error } = await supabase
-                .from('blog_posts')
-                .select('*')
-                .eq('id', id)
-                .single();
+            try {
+                const { data, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
 
-            if (!error && data) {
-                setPost(data);
+                if (!error && data) {
+                    setPost(data);
+                } else {
+                    const localMock = mockPosts.find(p => p.id === id);
+                    setPost(localMock || null);
+                }
+            } catch (err) {
+                console.warn('Supabase fetch failed, using local mock blog detail', err);
+                const localMock = mockPosts.find(p => p.id === id);
+                setPost(localMock || null);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
 
         fetchPost();

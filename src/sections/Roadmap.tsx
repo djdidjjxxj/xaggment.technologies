@@ -20,6 +20,41 @@ interface Milestone {
     order_index: number;
 }
 
+const mockMilestones: Milestone[] = [
+    {
+        id: '1',
+        title: 'Launch of Xaggment Platform',
+        description: 'Successfully established initial company operations, finalized brand identity, and launched the initial corporate website.',
+        status: 'completed',
+        period: 'Q1 2026',
+        order_index: 1
+    },
+    {
+        id: '2',
+        title: 'Release of Prebuilt SaaS Solutions',
+        description: 'Deployment of fully optimized prebuilt template apps for e-commerce, content portals, and internal agency tools.',
+        status: 'in_progress',
+        period: 'Q2 2026',
+        order_index: 2
+    },
+    {
+        id: '3',
+        title: 'AI Agent Automations & Integrations',
+        description: 'Rollout of modular AI workflow integrations, customizable discord/slack bots, and custom automated email response handlers.',
+        status: 'planned',
+        period: 'Q3 2026',
+        order_index: 3
+    },
+    {
+        id: '4',
+        title: 'Global Creator Scale Program',
+        description: 'Launching monetization accelerators and custom web portals to empower content creators with direct-to-audience platforms.',
+        status: 'planned',
+        period: 'Q4 2026',
+        order_index: 4
+    }
+];
+
 const Roadmap: React.FC = () => {
     const [milestones, setMilestones] = useState<Milestone[]>([]);
     const [loading, setLoading] = useState(true);
@@ -27,15 +62,23 @@ const Roadmap: React.FC = () => {
 
     useEffect(() => {
         const fetchMilestones = async () => {
-            const { data, error } = await supabase
-                .from('roadmap_milestones')
-                .select('*')
-                .order('order_index', { ascending: true });
+            try {
+                const { data, error } = await supabase
+                    .from('roadmap_milestones')
+                    .select('*')
+                    .order('order_index', { ascending: true });
 
-            if (!error && data) {
-                setMilestones(data);
+                if (!error && data && data.length > 0) {
+                    setMilestones(data);
+                } else {
+                    setMilestones(mockMilestones);
+                }
+            } catch (err) {
+                console.warn('Supabase fetch failed, using fallback mock roadmap data', err);
+                setMilestones(mockMilestones);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
 
         fetchMilestones();
