@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
 import { Menu, Globe } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
     Sheet,
     SheetContent,
@@ -11,8 +12,10 @@ import {
 } from "@/components/ui/sheet";
 
 const navItems = [
+    { name: 'Home', href: '/', isRoute: true },
     { name: 'Prebuilt', href: 'services' },
     { name: 'Customized', href: 'services' },
+    { name: 'Pricing', href: '/pricing', isRoute: true },
     { name: 'About Us', href: 'team' },
     { name: 'Contact Us', href: 'cta' },
 ];
@@ -20,6 +23,8 @@ const navItems = [
 const Header: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -28,6 +33,20 @@ const Header: React.FC = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const handleNavigation = (href: string, isRoute?: boolean) => {
+        if (isRoute) {
+            navigate(href);
+        } else {
+            if (location.pathname !== '/') {
+                navigate('/');
+                setTimeout(() => scrollToSection(href), 100);
+            } else {
+                scrollToSection(href);
+            }
+        }
+        setIsOpen(false);
+    };
 
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
@@ -40,7 +59,6 @@ const Header: React.FC = () => {
                 behavior: 'smooth'
             });
         }
-        setIsOpen(false);
     };
 
     return (
@@ -57,23 +75,29 @@ const Header: React.FC = () => {
                 {/* Desktop Left Nav */}
                 <div className="hidden md:flex items-center gap-6 lg:gap-10">
                     <button
-                        onClick={() => scrollToSection('services')}
+                        onClick={() => handleNavigation('services')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors"
                     >
                         Prebuilt
                     </button>
                     <button
-                        onClick={() => scrollToSection('services')}
+                        onClick={() => handleNavigation('services')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors"
                     >
                         Customized
+                    </button>
+                    <button
+                        onClick={() => handleNavigation('/pricing', true)}
+                        className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors"
+                    >
+                        Pricing
                     </button>
                 </div>
 
                 {/* Logo (Centered) */}
                 <div
                     className="flex items-center gap-2 md:gap-3 cursor-pointer"
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    onClick={() => handleNavigation('/', true)}
                 >
                     <div className="w-6 h-6 md:w-8 md:h-8 bg-[#0f172a] rounded-lg flex items-center justify-center text-white font-black text-[10px] md:text-xs leading-none">
                         X
@@ -84,13 +108,13 @@ const Header: React.FC = () => {
                 {/* Desktop Right Nav */}
                 <div className="hidden md:flex items-center gap-6 lg:gap-10">
                     <button
-                        onClick={() => scrollToSection('team')}
+                        onClick={() => handleNavigation('team')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors whitespace-nowrap"
                     >
                         About Us
                     </button>
                     <button
-                        onClick={() => scrollToSection('cta')}
+                        onClick={() => handleNavigation('cta')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors whitespace-nowrap"
                     >
                         Contact Us
@@ -118,7 +142,7 @@ const Header: React.FC = () => {
                                 {navItems.map((item) => (
                                     <button
                                         key={item.name}
-                                        onClick={() => scrollToSection(item.href)}
+                                        onClick={() => handleNavigation(item.href, item.isRoute)}
                                         className="text-lg font-bold text-slate-500 hover:text-[#0f172a] transition-all text-left uppercase tracking-tight"
                                     >
                                         {item.name}
