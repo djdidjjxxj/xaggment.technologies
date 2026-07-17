@@ -2,16 +2,43 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { openWhatsApp } from '@/utils/whatsapp';
-import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero: React.FC = () => {
+    const navigate = useNavigate();
+
+    const scrollToServices = () => {
+        const el = document.getElementById('services');
+        if (el) {
+            const offset = 100;
+            const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: pos, behavior: 'smooth' });
+        }
+    };
+
+    const goToContact = () => {
+        const el = document.getElementById('contact');
+        if (el) {
+            const offset = 100;
+            const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: pos, behavior: 'smooth' });
+        } else {
+            navigate('/contact');
+        }
+    };
+
     return (
         <section className="relative min-h-[90vh] md:min-h-screen pt-8 md:pt-10 pb-10 flex flex-col items-center bg-white overflow-hidden">
             {/* Grid Background */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000010_1px,transparent_1px),linear-gradient(to_bottom,#00000010_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+            <div className="absolute inset-0 z-0 opacity-[0.03]" 
+                style={{ 
+                    backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+                    backgroundSize: '40px 40px'
+                }} 
+            />
 
             <div className="max-w-[1400px] mx-auto px-6 relative z-10 flex flex-col items-center w-full flex-1 justify-center">
-                {/* Founder Image (Shifted even higher) */}
+                {/* Founder Image */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -29,7 +56,7 @@ const Hero: React.FC = () => {
                     />
                 </motion.div>
 
-                {/* Hero Headline (Corrected Proportions & Full Sentence Glow) */}
+                {/* Hero Headline */}
                 <div className="text-center w-full z-30 -mt-20 md:-mt-32 px-4 flex flex-col items-center">
                     <motion.h1
                         className="text-[13vw] md:text-[6.2vw] font-heading font-medium tracking-tighter leading-[1.05] mb-6 md:mb-10 inline-block text-[#0a0f1e] whitespace-nowrap"
@@ -68,7 +95,7 @@ const Hero: React.FC = () => {
                         ))}
                     </motion.h1>
 
-                    <motion.p 
+                    <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 2.0, duration: 0.8 }}
@@ -78,32 +105,37 @@ const Hero: React.FC = () => {
                         for speed, scalability, and long-term success.
                     </motion.p>
 
-                    {/* Dual Action Buttons (Made smaller and more refined) */}
+                    {/* Dual Action Buttons — original sketch style */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 2.2, duration: 0.8 }}
-                        className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 md:pt-8"
+                        className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mt-4 md:mt-8"
                     >
                         <Button
                             size="lg"
-                            className="w-full sm:w-auto h-12 md:h-14 px-6 md:px-8 bg-[#0f172a] hover:bg-black text-white rounded-2xl text-sm md:text-base font-bold transition-all shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
-                            onClick={() => openWhatsApp('Hi Xaggment, I want to build a startup and need your services!')}
+                            onClick={() => openWhatsApp('Hi Xaggment! I want to build my startup. Please help me get started.')}
+                            className="sketch-btn-pro bg-[#000] text-white hover:bg-slate-900 px-8 py-4 md:px-10 md:py-5 text-sm md:text-lg font-bold h-auto shadow-xl transition-all w-[200px] md:w-auto"
                         >
                             Start Building Now
-                            <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                         </Button>
                         <Button
                             size="lg"
-                            variant="outline"
-                            onClick={() => openWhatsApp('Hi Xaggment, I have some questions.')}
-                            className="w-full sm:w-auto h-12 md:h-14 px-6 md:px-8 border-2 border-black bg-white text-black hover:bg-slate-50 rounded-2xl text-sm md:text-base font-bold transition-all"
+                            onClick={scrollToServices}
+                            className="sketch-btn-pro contact-btn-fix bg-white text-black border-2 border-black px-8 py-4 md:px-10 md:py-5 text-sm md:text-lg font-bold h-auto shadow-sm transition-all w-[200px] md:w-auto hover:bg-slate-50"
+                        >
+                            Let's Explore
+                        </Button>
+                        <Button
+                            size="lg"
+                            onClick={goToContact}
+                            className="sketch-btn-pro contact-btn-fix bg-white text-black border-2 border-black px-8 py-4 md:px-10 md:py-5 text-sm md:text-lg font-bold h-auto shadow-sm transition-all w-[200px] md:w-auto hover:bg-slate-50"
                         >
                             Contact Us
                         </Button>
                     </motion.div>
 
-                    {/* Trusted Badge (Matching reference) */}
+                    {/* Trusted Badge */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
