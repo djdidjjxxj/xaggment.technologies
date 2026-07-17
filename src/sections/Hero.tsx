@@ -8,7 +8,7 @@ const Hero: React.FC = () => {
     return (
         <section className="relative min-h-[90vh] md:min-h-screen pt-8 md:pt-10 pb-10 flex flex-col items-center bg-white overflow-hidden">
             {/* Grid Background */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000010_1px,transparent_1px),linear-gradient(to_bottom,#00000010_1px,transparent_1px)] bg-[size:32px_32px] intersect:animate-fade-in opacity-0 intersect-once"></div>
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000010_1px,transparent_1px),linear-gradient(to_bottom,#00000010_1px,transparent_1px)] bg-[size:32px_32px]"></div>
 
             <div className="max-w-[1400px] mx-auto px-6 relative z-10 flex flex-col items-center w-full flex-1 justify-center">
                 {/* Founder Image (Shifted even higher) */}
@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
                 </motion.div>
 
                 {/* Hero Headline (Corrected Proportions & Full Sentence Glow) */}
-                <div className="text-center w-full z-30 -mt-20 md:-mt-32 px-4 flex flex-col items-center intersect:animate-fade-up intersect-once opacity-0">
+                <div className="text-center w-full z-30 -mt-20 md:-mt-32 px-4 flex flex-col items-center">
                     <motion.h1
                         className="text-[13vw] md:text-[6.2vw] font-heading font-medium tracking-tighter leading-[1.05] mb-6 md:mb-10 inline-block text-[#0a0f1e] whitespace-nowrap"
                         style={{
@@ -68,14 +68,22 @@ const Hero: React.FC = () => {
                         ))}
                     </motion.h1>
 
-                    <p className="text-base md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed intersect:animate-fade-up intersect-once opacity-0 delay-150 mb-8">
+                    <motion.p 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 2.0, duration: 0.8 }}
+                        className="text-base md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8"
+                    >
                         Custom development, SaaS templates, and AI-driven automation built
                         for speed, scalability, and long-term success.
-                    </p>
+                    </motion.p>
 
                     {/* Dual Action Buttons (Made smaller and more refined) */}
-                    <div
-                        className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 md:pt-8 intersect:animate-fade-up intersect-once opacity-0 delay-300"
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 2.2, duration: 0.8 }}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 md:pt-8"
                     >
                         <Button
                             size="lg"
@@ -93,7 +101,7 @@ const Hero: React.FC = () => {
                         >
                             Contact Us
                         </Button>
-                    </div>
+                    </motion.div>
 
                     {/* Trusted Badge (Matching reference) */}
                     <motion.div
