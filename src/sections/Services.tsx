@@ -266,15 +266,23 @@ const Services: React.FC = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.22, 1, 0.36, 1] }}
                                 viewport={{ once: true, margin: "-100px" }}
+                                className="h-full"
                             >
-                                <Card className="group overflow-hidden border-none shadow-none bg-slate-50 rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-12 h-full flex flex-col transition-all duration-700 hover:bg-slate-100 hover:shadow-2xl">
-                                    <div className="relative aspect-video rounded-[2rem] md:rounded-[2.5rem] overflow-hidden mb-8 md:mb-12 border border-slate-100 shadow-sm">
-                                        <img
-                                            src={service.image}
-                                            alt={service.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                                        />
-                                    </div>
+                                <motion.div
+                                    animate={{ y: [0, -8, 0] }}
+                                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
+                                    className="h-full"
+                                >
+                                    <Card className="group overflow-hidden border-none shadow-none bg-slate-50 rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-12 h-full flex flex-col transition-all duration-500 hover:bg-slate-100 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-2">
+                                        <div className="relative aspect-video rounded-[2rem] md:rounded-[2.5rem] overflow-hidden mb-8 md:mb-12 border border-slate-100 shadow-sm">
+                                            <motion.img
+                                                whileHover={{ scale: 1.15 }}
+                                                transition={{ duration: 0.8 }}
+                                                src={service.image}
+                                                alt={service.title}
+                                                className="w-full h-full object-cover transition-transform duration-1000"
+                                            />
+                                        </div>
                                     <CardContent className="p-0 flex flex-col flex-1">
                                         <CardTitle className="text-2xl md:text-3xl font-heading font-bold mb-4 text-[#0f172a] tracking-tight leading-tight">{service.title}</CardTitle>
                                         <CardDescription className="text-slate-500 text-lg md:text-xl font-bold mb-10 leading-relaxed">
@@ -296,6 +304,7 @@ const Services: React.FC = () => {
                                         </Button>
                                     </CardContent>
                                 </Card>
+                                </motion.div>
                             </motion.div>
                         ))}
                     </div>

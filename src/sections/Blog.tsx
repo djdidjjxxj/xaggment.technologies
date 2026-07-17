@@ -70,36 +70,44 @@ const Blog: React.FC = () => {
                             transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
                             viewport={{ once: true, margin: "-100px" }}
                         >
-                            <Link to={`/blog/${post.id}`}>
-                                <Card className="group overflow-hidden border-none shadow-none bg-white rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:shadow-2xl hover:-translate-y-3">
-                                    <div className="relative aspect-video rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden mb-8 md:mb-10 border border-slate-100">
-                                        <img
-                                            src={post.thumbnail_url}
-                                            alt={post.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                                        />
-                                    </div>
-                                    <CardContent className="p-0 flex flex-col flex-1">
-                                        <div className="flex items-center gap-3 mb-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                                            <span>{post.author}</span>
-                                            <div className="w-1 h-1 rounded-full bg-slate-300" />
-                                            <span>{post.date}</span>
-                                            <div className="w-1 h-1 rounded-full bg-slate-300" />
-                                            <span>{post.readTime}</span>
+                            <motion.div
+                                animate={{ y: [0, -8, 0] }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
+                                className="h-full"
+                            >
+                                <Link to={`/blog/${post.id}`} className="h-full block">
+                                    <Card className="group overflow-hidden border-none shadow-none bg-white rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:shadow-2xl hover:-translate-y-3">
+                                        <div className="relative aspect-video rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden mb-8 md:mb-10 border border-slate-100">
+                                            <motion.img
+                                                whileHover={{ scale: 1.15 }}
+                                                transition={{ duration: 0.8 }}
+                                                src={post.thumbnail_url}
+                                                alt={post.title}
+                                                className="w-full h-full object-cover transition-transform duration-1000"
+                                            />
                                         </div>
-                                        <CardTitle className="text-xl md:text-2xl font-heading font-bold mb-4 group-hover:text-blue-600 transition-colors leading-tight tracking-tight">
-                                            {post.title}
-                                        </CardTitle>
-                                        <CardDescription className="text-slate-500 text-base md:text-lg font-medium line-clamp-3 mb-6 leading-relaxed">
-                                            {post.excerpt}
-                                        </CardDescription>
-                                        <div className="mt-auto flex items-center gap-2 text-blue-600 font-bold text-sm md:text-base group-hover:gap-4 transition-all duration-300">
-                                            Read Article
-                                            <span>→</span>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </Link>
+                                        <CardContent className="p-0 flex flex-col flex-1">
+                                            <div className="flex items-center gap-3 mb-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                                <span>{post.author}</span>
+                                                <div className="w-1 h-1 rounded-full bg-slate-300" />
+                                                <span>{post.date}</span>
+                                                <div className="w-1 h-1 rounded-full bg-slate-300" />
+                                                <span>{post.readTime}</span>
+                                            </div>
+                                            <CardTitle className="text-xl md:text-2xl font-heading font-bold mb-4 group-hover:text-blue-600 transition-colors leading-tight tracking-tight">
+                                                {post.title}
+                                            </CardTitle>
+                                            <CardDescription className="text-slate-500 text-base md:text-lg font-medium line-clamp-3 mb-6 leading-relaxed">
+                                                {post.excerpt}
+                                            </CardDescription>
+                                            <div className="mt-auto flex items-center gap-2 text-blue-600 font-bold text-sm md:text-base group-hover:gap-4 transition-all duration-300">
+                                                Read Article
+                                                <span>→</span>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            </motion.div>
                         </motion.div>
                     ))}
                 </div>

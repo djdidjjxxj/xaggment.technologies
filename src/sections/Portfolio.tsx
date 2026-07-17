@@ -142,7 +142,13 @@ const Portfolio: React.FC = () => {
                             transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
                             viewport={{ once: true, margin: "-100px" }}
                         >
-                            <ProjectCard {...project} />
+                            <motion.div
+                                animate={{ y: [0, -8, 0] }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
+                                className="h-full"
+                            >
+                                <ProjectCard {...project} />
+                            </motion.div>
                         </motion.div>
                     ))}
                 </div>
