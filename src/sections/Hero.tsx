@@ -119,24 +119,6 @@ const Hero: React.FC = () => {
                         </Button>
                     </motion.div>
 
-                    {/* Trusted Badge */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 2.5, duration: 1 }}
-                        className="mt-10 md:mt-16 flex flex-col md:flex-row items-center justify-center gap-4"
-                    >
-                        <div className="flex -space-x-3">
-                            {[1, 2, 3].map((i) => (
-                                <div key={i} className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white overflow-hidden shadow-md">
-                                    <img src={`https://i.pravatar.cc/100?u=${i}`} alt="User" className="w-full h-full object-cover" />
-                                </div>
-                            ))}
-                        </div>
-                        <p className="text-slate-500 font-medium text-sm md:text-lg">
-                            Trusted by <span className="text-blue-600 font-bold">1.3L+</span> Audience
-                        </p>
-                    </motion.div>
                 </div>
             </div>
         </section>

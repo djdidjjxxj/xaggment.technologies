@@ -1,80 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
-import { supabase } from '@/db/supabase';
 import { Card, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
-import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 
-interface BlogPost {
-    id: string;
-    title: string;
-    excerpt: string;
-    thumbnail_url: string;
-    author: string;
-    published_at: string;
-}
-
-const mockPosts = [
+// Unique blogs written from Kaustav's perspective as Founder
+const posts = [
     {
         id: '1',
-        title: 'Building Scalable AI Automation Workflows',
-        excerpt: 'Learn how to integrate AI agents into your business processes to save time, reduce error rates, and streamline operation efficiency.',
-        thumbnail_url: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=600&auto=format&fit=crop',
+        title: 'Why I Started Xaggment — A Founder\'s Honest Story',
+        excerpt: 'Most agencies sell you a dream. I started Xaggment because I was tired of watching small businesses get overcharged for average work. Here\'s the raw truth about why we exist and what we\'re actually building.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600&auto=format&fit=crop',
         author: 'Kaustav',
-        published_at: new Date().toISOString()
+        date: 'July 2025',
+        readTime: '5 min read',
     },
     {
         id: '2',
-        title: 'The Future of SaaS in 2026',
-        excerpt: 'An in-depth look at emerging software architectures, microservices, and how prebuilt platforms can accelerate your startup launch.',
-        thumbnail_url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
-        author: 'Alex Johnson',
-        published_at: new Date(Date.now() - 86400000 * 2).toISOString()
+        title: 'The ₹30,000 Website vs the ₹3 Lakh Website — What Actually Differs?',
+        excerpt: 'I\'ve seen both ends of the spectrum. A client once paid ₹3 lakhs for a website that crashed in 2 weeks. Another paid ₹30,000 and scaled to 10,000 monthly visitors. The difference isn\'t the price — here\'s what it really is.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=600&auto=format&fit=crop',
+        author: 'Kaustav',
+        date: 'June 2025',
+        readTime: '7 min read',
     },
     {
         id: '3',
-        title: 'A Beginners Guide to Creator Growth',
-        excerpt: 'Discover the marketing channels, design languages, and content pipelines that successful creators use to scale their reach rapidly.',
-        thumbnail_url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop',
-        author: 'Sarah Smith',
-        published_at: new Date(Date.now() - 86400000 * 5).toISOString()
+        title: 'AI Automation Is Not the Future — It\'s Already Happening to Your Competitors',
+        excerpt: 'While you\'re manually replying to leads, your competitor\'s AI bot has already qualified them, sent a proposal, and followed up twice. I\'ll show you exactly what automation looks like in 2025 for small businesses.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=600&auto=format&fit=crop',
+        author: 'Kaustav',
+        date: 'May 2025',
+        readTime: '6 min read',
     }
 ];
 
 const Blog: React.FC = () => {
-    const [posts, setPosts] = useState<BlogPost[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const { data, error } = await supabase
-                    .from('blog_posts')
-                    .select('*')
-                    .order('published_at', { ascending: false });
-
-                if (!error && data && data.length > 0) {
-                    setPosts(data);
-                } else {
-                    setPosts(mockPosts);
-                }
-            } catch (err) {
-                console.warn('Supabase fetch failed, using fallback mock blog data', err);
-                setPosts(mockPosts);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPosts();
-    }, []);
-
     return (
         <section id="blog" className="py-24 px-6 bg-slate-50 overflow-hidden">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16 md:mb-24">
                     <div className="inline-block px-6 py-2 rounded-full bg-white border border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
-                        Insights
+                        Founder's Desk
                     </div>
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
@@ -82,58 +48,61 @@ const Blog: React.FC = () => {
                         viewport={{ once: true }}
                         className="text-5xl md:text-7xl font-heading font-bold mt-4 text-[#0f172a] tracking-tight leading-[1.2]"
                     >
-                        Latest from <br className="hidden md:block" /> Our Blog
+                        Thoughts from <br className="hidden md:block" /> the Founder
                     </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="mt-4 text-slate-500 text-lg font-medium max-w-xl mx-auto"
+                    >
+                        Unfiltered insights on business, tech, and growth — written by Kaustav himself.
+                    </motion.p>
                 </div>
 
-                {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                        {[1, 2, 3].map((i) => (
-                            <div key={i} className="h-[500px] bg-white animate-pulse rounded-[3rem]" />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-10">
-                        {posts.map((post, idx) => (
-                            <motion.div
-                                key={post.id}
-                                initial={{ opacity: 0, y: 50 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                                viewport={{ once: true, margin: "-100px" }}
-                            >
-                                <Link to={`/blog/${post.id}`}>
-                                    <Card className="group overflow-hidden border-none shadow-none bg-white rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:shadow-2xl hover:-translate-y-3">
-                                        <div className="relative aspect-video rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden mb-8 md:mb-10 border border-slate-100">
-                                            <img
-                                                src={post.thumbnail_url}
-                                                alt={post.title}
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                                            />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-10">
+                    {posts.map((post, idx) => (
+                        <motion.div
+                            key={post.id}
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                            viewport={{ once: true, margin: "-100px" }}
+                        >
+                            <Link to={`/blog/${post.id}`}>
+                                <Card className="group overflow-hidden border-none shadow-none bg-white rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:shadow-2xl hover:-translate-y-3">
+                                    <div className="relative aspect-video rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden mb-8 md:mb-10 border border-slate-100">
+                                        <img
+                                            src={post.thumbnail_url}
+                                            alt={post.title}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                        />
+                                    </div>
+                                    <CardContent className="p-0 flex flex-col flex-1">
+                                        <div className="flex items-center gap-3 mb-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                            <span>{post.author}</span>
+                                            <div className="w-1 h-1 rounded-full bg-slate-300" />
+                                            <span>{post.date}</span>
+                                            <div className="w-1 h-1 rounded-full bg-slate-300" />
+                                            <span>{post.readTime}</span>
                                         </div>
-                                        <CardContent className="p-0 flex flex-col flex-1">
-                                            <div className="flex items-center gap-3 mb-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                                                <span>{post.author}</span>
-                                                <div className="w-1 h-1 rounded-full bg-slate-300" />
-                                                <span>{format(new Date(post.published_at), 'MMM dd, yyyy')}</span>
-                                            </div>
-                                            <CardTitle className="text-2xl md:text-3xl font-heading font-bold mb-4 group-hover:text-blue-600 transition-colors leading-tight tracking-tight">
-                                                {post.title}
-                                            </CardTitle>
-                                            <CardDescription className="text-slate-500 text-lg md:text-xl font-bold line-clamp-3 mb-6 leading-relaxed">
-                                                {post.excerpt}
-                                            </CardDescription>
-                                            <div className="mt-auto flex items-center gap-2 text-blue-600 font-bold text-sm md:text-base group-hover:gap-4 transition-all duration-300">
-                                                Read Article
-                                                <span>→</span>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            </motion.div>
-                        ))}
-                    </div>
-                )}
+                                        <CardTitle className="text-xl md:text-2xl font-heading font-bold mb-4 group-hover:text-blue-600 transition-colors leading-tight tracking-tight">
+                                            {post.title}
+                                        </CardTitle>
+                                        <CardDescription className="text-slate-500 text-base md:text-lg font-medium line-clamp-3 mb-6 leading-relaxed">
+                                            {post.excerpt}
+                                        </CardDescription>
+                                        <div className="mt-auto flex items-center gap-2 text-blue-600 font-bold text-sm md:text-base group-hover:gap-4 transition-all duration-300">
+                                            Read Article
+                                            <span>→</span>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Link>
+                        </motion.div>
+                    ))}
+                </div>
             </div>
         </section>
     );

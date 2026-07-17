@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
-import { Menu, Globe } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
     Sheet,
@@ -11,13 +11,13 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 
+// Map nav item name → the section id to scroll to
 const navItems = [
-    { name: 'Home', href: '/', isRoute: true },
-    { name: 'Prebuilt', href: 'services' },
-    { name: 'Customized', href: 'custom-development' },
-    { name: 'Pricing', href: 'website-development' },
-    { name: 'About Us', href: 'team' },
-    { name: 'Contact Us', href: 'contact' },
+    { name: 'Prebuilt',    sectionId: 'services' },
+    { name: 'Customized',  sectionId: 'custom-development' },
+    { name: 'Pricing',     sectionId: 'website-development' },
+    { name: 'About Us',    sectionId: 'team' },
+    { name: 'Contact Us',  sectionId: 'contact' },
 ];
 
 const Header: React.FC = () => {
@@ -27,51 +27,45 @@ const Header: React.FC = () => {
     const location = useLocation();
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-        };
+        const handleScroll = () => setIsScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
-    const handleNavigation = (href: string, isRoute?: boolean) => {
-        setIsOpen(false);
-        if (isRoute) {
-            navigate(href);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            if (location.pathname !== '/') {
-                // Navigate home first, then wait for DOM to render before scrolling
-                navigate('/');
-                // Poll until the section exists, up to 2s
-                let attempts = 0;
-                const poll = setInterval(() => {
-                    const el = document.getElementById(href);
-                    if (el) {
-                        clearInterval(poll);
-                        const offset = 100;
-                        const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({ top: pos, behavior: 'smooth' });
-                    }
-                    if (++attempts > 20) clearInterval(poll);
-                }, 100);
-            } else {
-                scrollToSection(href);
-            }
-        }
-    };
 
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
         if (element) {
             const offset = 100;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
+            const pos = element.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: pos, behavior: 'smooth' });
         }
+    };
+
+    const handleNav = (sectionId: string) => {
+        setIsOpen(false);
+        if (location.pathname !== '/') {
+            // Navigate home first, then poll until section exists
+            navigate('/');
+            let attempts = 0;
+            const poll = setInterval(() => {
+                const el = document.getElementById(sectionId);
+                if (el) {
+                    clearInterval(poll);
+                    const offset = 100;
+                    const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: pos, behavior: 'smooth' });
+                }
+                if (++attempts > 25) clearInterval(poll);
+            }, 100);
+        } else {
+            scrollToSection(sectionId);
+        }
+    };
+
+    const goHome = () => {
+        setIsOpen(false);
+        navigate('/');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
@@ -88,29 +82,29 @@ const Header: React.FC = () => {
                 {/* Desktop Left Nav */}
                 <div className="hidden md:flex items-center gap-6 lg:gap-10">
                     <button
-                        onClick={() => handleNavigation('services')}
+                        onClick={() => handleNav('services')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors"
                     >
                         Prebuilt
                     </button>
                     <button
-                        onClick={() => handleNavigation('custom-development')}
+                        onClick={() => handleNav('custom-development')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors"
                     >
                         Customized
                     </button>
                     <button
-                        onClick={() => handleNavigation('website-development')}
+                        onClick={() => handleNav('website-development')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors"
                     >
                         Pricing
                     </button>
                 </div>
 
-                {/* Logo (Centered) */}
+                {/* Logo — click goes home */}
                 <div
                     className="flex items-center gap-2 md:gap-3 cursor-pointer"
-                    onClick={() => handleNavigation('/', true)}
+                    onClick={goHome}
                 >
                     <div className="w-6 h-6 md:w-8 md:h-8 bg-[#0f172a] rounded-lg flex items-center justify-center text-white font-black text-[10px] md:text-xs leading-none">
                         X
@@ -121,20 +115,20 @@ const Header: React.FC = () => {
                 {/* Desktop Right Nav */}
                 <div className="hidden md:flex items-center gap-6 lg:gap-10">
                     <button
-                        onClick={() => handleNavigation('team')}
+                        onClick={() => handleNav('team')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors whitespace-nowrap"
                     >
                         About Us
                     </button>
                     <button
-                        onClick={() => handleNavigation('contact')}
+                        onClick={() => handleNav('contact')}
                         className="text-xs lg:text-sm font-bold text-slate-700 hover:text-black transition-colors whitespace-nowrap"
                     >
                         Contact Us
                     </button>
                 </div>
 
-                {/* Mobile Menu Trigger */}
+                {/* Mobile Menu */}
                 <div className="md:hidden flex items-center">
                     <Sheet open={isOpen} onOpenChange={setIsOpen}>
                         <SheetTrigger asChild>
@@ -145,17 +139,25 @@ const Header: React.FC = () => {
                         <SheetContent side="left" className="w-[280px] bg-white border-none rounded-r-3xl p-8">
                             <SheetHeader className="mb-8">
                                 <SheetTitle className="text-left flex items-center gap-2">
-                                    <div className="w-8 h-8 bg-[#0f172a] rounded-lg flex items-center justify-center text-white font-black text-sm">
+                                    <div
+                                        className="w-8 h-8 bg-[#0f172a] rounded-lg flex items-center justify-center text-white font-black text-sm cursor-pointer"
+                                        onClick={goHome}
+                                    >
                                         X
                                     </div>
-                                    <span className="text-xl font-black italic tracking-tighter uppercase text-[#0f172a]">XAGGMENT</span>
+                                    <span
+                                        className="text-xl font-black italic tracking-tighter uppercase text-[#0f172a] cursor-pointer"
+                                        onClick={goHome}
+                                    >
+                                        XAGGMENT
+                                    </span>
                                 </SheetTitle>
                             </SheetHeader>
                             <div className="flex flex-col gap-6">
                                 {navItems.map((item) => (
                                     <button
                                         key={item.name}
-                                        onClick={() => handleNavigation(item.href, item.isRoute)}
+                                        onClick={() => handleNav(item.sectionId)}
                                         className="text-lg font-bold text-slate-500 hover:text-[#0f172a] transition-all text-left uppercase tracking-tight"
                                     >
                                         {item.name}

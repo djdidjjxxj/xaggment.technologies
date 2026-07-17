@@ -11,23 +11,6 @@ const LogosSection: React.FC = () => {
         <section className="py-24 bg-white overflow-hidden relative border-y border-slate-50">
             <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center">
                 {/* Trusted Badge */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-3 mb-16"
-                >
-                    <div className="flex -space-x-2">
-                        {[1, 2, 3].map((i) => (
-                            <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-sm">
-                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i + 15}`} alt="user" />
-                            </div>
-                        ))}
-                    </div>
-                    <p className="text-sm font-bold text-slate-500 uppercase tracking-tight">
-                        Trusted by <span className="text-[#0f172a]">1.3L+</span> Founders
-                    </p>
-                </motion.div>
 
                 {/* Logos (Scrolling effect) */}
                 <div className="w-full relative">
