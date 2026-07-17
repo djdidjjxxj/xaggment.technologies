@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Check, X, Package, Layers, Diamond } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { openWhatsApp } from '@/utils/whatsapp';
 import { Card } from '@/components/ui/card';
 
 const plans = [
@@ -151,7 +152,10 @@ const ComboPlansSection = () => {
                                 </div>
                                 
                                 <div className="mt-auto">
-                                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6">
+                                    <Button 
+                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6"
+                                        onClick={() => openWhatsApp(`Hi Xaggment, I am interested in the ${plan.name}!`)}
+                                    >
                                         Get Started
                                     </Button>
                                 </div>

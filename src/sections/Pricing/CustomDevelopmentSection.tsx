@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Code, Terminal, MonitorSmartphone, Database, Cpu, LayoutTemplate } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { openWhatsApp } from '@/utils/whatsapp';
 
 const services = [
     { name: 'Custom Business Websites', icon: LayoutTemplate },
@@ -72,7 +73,10 @@ const CustomDevelopmentSection = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.4 }}
                     >
-                        <Button className="bg-white text-blue-900 hover:bg-gray-100 text-lg px-8 py-6 rounded-full font-bold shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] transition-all">
+                        <Button 
+                            className="bg-white text-blue-900 hover:bg-gray-100 text-lg px-8 py-6 rounded-full font-bold shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] transition-all"
+                            onClick={() => openWhatsApp('Hi Xaggment, I am interested in Custom Development for my startup!')}
+                        >
                             Request Custom Quote
                         </Button>
                     </motion.div>

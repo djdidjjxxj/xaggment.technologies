@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, MessageSquare, PhoneCall, CalendarCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { openWhatsApp } from '@/utils/whatsapp';
 
 const CTASection = () => {
     return (
@@ -29,17 +30,28 @@ const CTASection = () => {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full text-lg shadow-lg hover:shadow-blue-500/25 transition-all group">
+                            <Button 
+                                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full text-lg shadow-lg hover:shadow-blue-500/25 transition-all group"
+                                onClick={() => openWhatsApp('Hi Xaggment, I want to start a new project.')}
+                            >
                                 <CalendarCheck className="w-5 h-5 mr-2" />
                                 Get Free Consultation
                             </Button>
                             
-                            <Button variant="outline" className="w-full sm:w-auto border-2 border-gray-200 dark:border-gray-600 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white px-8 py-6 rounded-full text-lg transition-all">
+                            <Button 
+                                variant="outline" 
+                                className="w-full sm:w-auto border-2 border-gray-200 dark:border-gray-600 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white px-8 py-6 rounded-full text-lg transition-all"
+                                onClick={() => openWhatsApp('Hi Xaggment, I want to schedule a free consultation.')}
+                            >
                                 <MessageSquare className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
                                 Request a Quote
                             </Button>
 
-                            <Button variant="ghost" className="w-full sm:w-auto hover:bg-blue-50 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-8 py-6 rounded-full text-lg font-semibold transition-all group">
+                            <Button 
+                                variant="ghost" 
+                                className="w-full sm:w-auto hover:bg-blue-50 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-8 py-6 rounded-full text-lg font-semibold transition-all group"
+                                onClick={() => openWhatsApp('Hi Xaggment, I would like to see some of your case studies.')}
+                            >
                                 Contact Us
                                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                             </Button>

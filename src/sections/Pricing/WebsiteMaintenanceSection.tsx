@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Check, X, ShieldCheck, Settings, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { openWhatsApp } from '@/utils/whatsapp';
 import { Card } from '@/components/ui/card';
 
 const plans = [
@@ -116,7 +117,10 @@ const WebsiteMaintenanceSection = () => {
                                     </ul>
                                 </div>
                                 <div className="mt-auto">
-                                    <Button className="w-full bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 dark:text-gray-900 text-white rounded-full py-6">
+                                    <Button 
+                                        className="w-full bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 dark:text-gray-900 text-white rounded-full py-6"
+                                        onClick={() => openWhatsApp(`Hi Xaggment, I am interested in the ${plan.name} for Website Maintenance!`)}
+                                    >
                                         Select Plan
                                     </Button>
                                 </div>

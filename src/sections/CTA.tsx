@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
+import { openWhatsApp } from '@/utils/whatsapp';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 const CTA: React.FC = () => {
@@ -37,7 +38,7 @@ const CTA: React.FC = () => {
                             <Button
                                 size="lg"
                                 className="bg-white text-[#0f172a] hover:bg-slate-50 rounded-full px-12 py-8 text-xl font-black h-auto shadow-xl transition-all duration-300 group"
-                                onClick={() => window.open('mailto:hello@xaggment.com')}
+                                onClick={() => openWhatsApp('Hi Xaggment, I am interested in scaling my brand with your services.')}
                             >
                                 Get Started Now
                                 <ArrowRight size={24} className="ml-2 group-hover:translate-x-2 transition-transform" />

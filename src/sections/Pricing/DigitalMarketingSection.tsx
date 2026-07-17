@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Check, X, Megaphone, TrendingUp, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { openWhatsApp } from '@/utils/whatsapp';
 import { Card } from '@/components/ui/card';
 
 const plans = [
@@ -114,7 +115,10 @@ const DigitalMarketingSection = () => {
                                             <p className={`text-xs ${plan.noteHighlight} font-semibold`}>{plan.note}</p>
                                         </div>
                                     </div>
-                                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6">
+                                    <Button 
+                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6"
+                                        onClick={() => openWhatsApp(`Hi Xaggment, I am interested in the ${plan.name} for Digital Marketing!`)}
+                                    >
                                         Get Started
                                     </Button>
                                 </div>
