@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import { openWhatsApp } from '@/utils/whatsapp';
 import { useNavigate } from 'react-router-dom';
+
 
 const Hero: React.FC = () => {
     const navigate = useNavigate();
@@ -95,17 +95,7 @@ const Hero: React.FC = () => {
                         ))}
                     </motion.h1>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 2.0, duration: 0.8 }}
-                        className="text-base md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8"
-                    >
-                        Custom development, SaaS templates, and AI-driven automation built
-                        for speed, scalability, and long-term success.
-                    </motion.p>
-
-                    {/* Dual Action Buttons — original sketch style */}
+                    {/* Dual Action Buttons */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -114,20 +104,14 @@ const Hero: React.FC = () => {
                     >
                         <Button
                             size="lg"
-                            onClick={() => openWhatsApp('Hi Xaggment! I want to build my startup. Please help me get started.')}
-                            className="sketch-btn-pro bg-[#000] text-white hover:bg-slate-900 px-8 py-4 md:px-10 md:py-5 text-sm md:text-lg font-bold h-auto shadow-xl transition-all w-[200px] md:w-auto"
-                        >
-                            Start Building Now
-                        </Button>
-                        <Button
-                            size="lg"
                             onClick={scrollToServices}
-                            className="sketch-btn-pro contact-btn-fix bg-white text-black border-2 border-black px-8 py-4 md:px-10 md:py-5 text-sm md:text-lg font-bold h-auto shadow-sm transition-all w-[200px] md:w-auto hover:bg-slate-50"
+                            className="sketch-btn-pro bg-[#000] text-white hover:bg-slate-900 px-8 py-4 md:px-10 md:py-5 text-sm md:text-lg font-bold h-auto shadow-xl transition-all w-[200px] md:w-auto"
                         >
                             Let's Explore
                         </Button>
                         <Button
                             size="lg"
+                            variant="outline"
                             onClick={goToContact}
                             className="sketch-btn-pro contact-btn-fix bg-white text-black border-2 border-black px-8 py-4 md:px-10 md:py-5 text-sm md:text-lg font-bold h-auto shadow-sm transition-all w-[200px] md:w-auto hover:bg-slate-50"
                         >
