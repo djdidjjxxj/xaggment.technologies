@@ -1,99 +1,151 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { Users, Zap, BarChart3, Globe } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Users, Zap, Clock, ShieldCheck } from 'lucide-react';
 
 const outcomes = [
     {
         icon: Users,
         title: 'More Customers',
-        description: 'Create better digital experiences designed to generate enquiries, leads and conversions — not just traffic.',
-        accent: 'bg-blue-50 border-blue-100',
-        iconColor: 'text-blue-600',
-        iconBg: 'bg-blue-100',
+        description: 'Create better digital experiences designed to generate enquiries, qualified leads and real business conversions.',
+        badge: 'Acquisition',
     },
     {
         icon: Zap,
         title: 'Less Manual Work',
-        description: 'Automate repetitive business processes — from lead follow-ups to invoicing — so your team focuses on what matters.',
-        accent: 'bg-violet-50 border-violet-100',
-        iconColor: 'text-violet-600',
-        iconBg: 'bg-violet-100',
+        description: 'Automate repetitive administrative tasks, lead qualification and data entry so your team focuses on growth.',
+        badge: 'Efficiency',
     },
     {
-        icon: BarChart3,
+        icon: Clock,
         title: 'Faster Operations',
-        description: 'Connect your tools, workflows and data to eliminate bottlenecks and improve business efficiency.',
-        accent: 'bg-amber-50 border-amber-100',
-        iconColor: 'text-amber-600',
-        iconBg: 'bg-amber-100',
+        description: 'Accelerate turnaround times with instant AI responses, automated notifications and streamlined digital systems.',
+        badge: 'Speed',
     },
     {
-        icon: Globe,
+        icon: ShieldCheck,
         title: 'Stronger Digital Presence',
-        description: 'Build a modern, credible and high-performing digital presence that positions your business as the obvious choice.',
-        accent: 'bg-emerald-50 border-emerald-100',
-        iconColor: 'text-emerald-600',
-        iconBg: 'bg-emerald-100',
+        description: 'Build long-term brand credibility, rank on Google search and convert visitor trust into sustainable revenue.',
+        badge: 'Reputation',
     },
 ];
 
 const OutcomesSection: React.FC = () => {
+    const [activeMobileSlide, setActiveMobileSlide] = useState(0);
+
+    // Slow auto-scroll loop for mobile view slider (cycles every 5 seconds)
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveMobileSlide(prev => (prev + 1) % outcomes.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
-        <section id="outcomes" className="py-20 md:py-28 px-6 bg-slate-50">
+        <section id="outcomes" className="py-16 md:py-24 px-6 bg-white">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="text-center mb-14">
+                <div className="text-center mb-12">
                     <motion.p
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="eyebrow-label mb-3"
+                        className="eyebrow-label mb-2"
                     >
-                        Business outcomes
+                        Business Outcomes
                     </motion.p>
                     <motion.h2
                         initial={{ opacity: 0, y: 18 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="section-title mb-4"
+                        className="section-title mb-3"
                     >
-                        What can Xaggment
-                        <br className="hidden md:block" />
-                        help you achieve?
+                        What can Xaggment help you achieve?
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="body-text max-w-lg mx-auto"
+                        className="body-text max-w-md mx-auto text-sm md:text-base"
                     >
-                        We focus on business outcomes — not just deliverables.
+                        We focus on business outcomes — not just technical deliverables.
                     </motion.p>
                 </div>
 
-                {/* Outcome Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {outcomes.map((outcome, idx) => (
+                {/* ── DESKTOP GRID (4 Cards) ── */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {outcomes.map((item, idx) => (
                         <motion.div
                             key={idx}
-                            initial={{ opacity: 0, y: 28 }}
+                            initial={{ opacity: 0, y: 24 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-60px' }}
-                            transition={{ duration: 0.7, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                            className={`${outcome.accent} border rounded-3xl p-8 flex gap-5 hover:shadow-md transition-all duration-500`}
+                            viewport={{ once: true, margin: '-40px' }}
+                            transition={{ duration: 0.5, delay: idx * 0.1 }}
+                            className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col justify-between hover:border-blue-200 hover:shadow-md transition-all"
                         >
-                            <div className={`${outcome.iconBg} w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                                <outcome.icon size={22} className={outcome.iconColor} />
-                            </div>
                             <div>
-                                <h3 className="text-lg md:text-xl font-bold text-[#0a0f1e] mb-2 tracking-tight">{outcome.title}</h3>
-                                <p className="text-slate-500 text-sm md:text-base font-medium leading-relaxed">{outcome.description}</p>
+                                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-5">
+                                    <item.icon size={24} />
+                                </div>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1">
+                                    {item.badge}
+                                </span>
+                                <h3 className="font-bold text-[#0a0f1e] text-xl mb-2">{item.title}</h3>
+                                <p className="text-slate-500 font-medium text-xs md:text-sm leading-relaxed">{item.description}</p>
                             </div>
                         </motion.div>
                     ))}
                 </div>
+
+                {/* ── MOBILE SLOW SLIDER WITH PAGINATION DOTS (Picture 4 fix) ── */}
+                <div className="block md:hidden">
+                    <div className="relative overflow-hidden min-h-[260px]">
+                        <AnimatePresence mode="wait">
+                            {outcomes.map((item, idx) => {
+                                if (idx !== activeMobileSlide) return null;
+                                return (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, x: 40 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -40 }}
+                                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                        className="bg-slate-50 border border-slate-200 rounded-3xl p-6 flex flex-col justify-between shadow-sm min-h-[240px]"
+                                    >
+                                        <div>
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                                                    <item.icon size={22} />
+                                                </div>
+                                                <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-blue-50 text-blue-600">
+                                                    {item.badge}
+                                                </span>
+                                            </div>
+                                            <h3 className="font-bold text-[#0a0f1e] text-lg mb-2">{item.title}</h3>
+                                            <p className="text-slate-500 font-medium text-xs leading-relaxed">{item.description}</p>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+                        </AnimatePresence>
+                    </div>
+
+                    {/* Pagination Dots for Mobile Outcomes Slider */}
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                        {outcomes.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => setActiveMobileSlide(idx)}
+                                className={`h-2 rounded-full transition-all duration-300 ${
+                                    activeMobileSlide === idx ? 'w-6 bg-[#0a0f1e]' : 'w-2 bg-slate-300'
+                                }`}
+                                aria-label={`Go to outcome slide ${idx + 1}`}
+                            />
+                        ))}
+                    </div>
+                </div>
+
             </div>
         </section>
     );
