@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import type { Variants } from 'motion/react';
 
 const steps = [
     {
@@ -30,27 +29,9 @@ const steps = [
     },
 ];
 
-const stepVariants: Variants = {
-    offscreen: (i: number) => ({
-        y: 40,
-        opacity: 0,
-        rotate: i % 2 === 0 ? -2 : 2,
-    }),
-    onscreen: {
-        y: 0,
-        opacity: 1,
-        rotate: 0,
-        transition: {
-            type: 'spring',
-            bounce: 0.25,
-            duration: 0.7,
-        },
-    },
-};
-
 const HowWeWorkSection: React.FC = () => {
     return (
-        <section id="process" className="py-16 md:py-24 px-6 bg-[#0a0f1e] overflow-hidden relative">
+        <section id="process" className="py-16 md:py-24 px-6 bg-[#0a0f1e] overflow-hidden">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-12">
@@ -58,9 +39,9 @@ const HowWeWorkSection: React.FC = () => {
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-xs font-black uppercase tracking-widest text-white/40 mb-2"
+                        className="text-xs font-black uppercase tracking-widest text-blue-400 mb-2"
                     >
-                        Our process
+                        Our Process
                     </motion.p>
                     <motion.h2
                         initial={{ opacity: 0, y: 18 }}
@@ -82,34 +63,26 @@ const HowWeWorkSection: React.FC = () => {
                     </motion.p>
                 </div>
 
-                {/* Steps Grid with Spring Motion & Progress Line */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 relative">
-                    {/* Animated Progress Line for desktop */}
-                    <div className="hidden lg:block absolute top-12 left-10 right-10 h-0.5 bg-white/10 -z-0" aria-hidden="true">
-                        <motion.div
-                            initial={{ scaleX: 0 }}
-                            whileInView={{ scaleX: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                            className="h-full bg-blue-500 origin-left"
-                        />
-                    </div>
-
+                {/* 5 Sleek Process Cards (Zero messy lines cutting text) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                     {steps.map((step, idx) => (
                         <motion.div
                             key={idx}
-                            custom={idx}
-                            initial="offscreen"
-                            whileInView="onscreen"
-                            viewport={{ once: true, amount: 0.3 }}
-                            variants={stepVariants}
-                            className="relative z-10"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{
+                                duration: 0.6,
+                                delay: idx * 0.1,
+                                ease: [0.22, 1, 0.36, 1],
+                            }}
+                            className="bg-white/5 border border-white/10 hover:border-blue-500/50 rounded-2xl p-6 flex flex-col justify-between hover:bg-white/10 transition-all duration-300 group"
                         >
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-6 h-full hover:bg-white/10 transition-all duration-300 group">
-                                <div className="text-3xl font-black text-blue-400/30 group-hover:text-blue-400 transition-colors leading-none mb-3 font-mono">
+                            <div>
+                                <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 font-mono font-bold text-sm mb-4 group-hover:bg-blue-500 group-hover:text-white transition-colors">
                                     {step.number}
                                 </div>
-                                <h3 className="text-base font-bold text-white mb-1.5 tracking-tight">{step.title}</h3>
+                                <h3 className="text-base font-bold text-white mb-2 tracking-tight">{step.title}</h3>
                                 <p className="text-xs text-white/50 font-medium leading-relaxed">{step.description}</p>
                             </div>
                         </motion.div>

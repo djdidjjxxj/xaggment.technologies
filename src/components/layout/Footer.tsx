@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Send, CheckCircle2 } from 'lucide-react';
 import { openWhatsApp } from '@/utils/whatsapp';
 
 const Footer: React.FC = () => {
@@ -116,11 +116,28 @@ const Footer: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Large Watermark Text (Restored from previous design) */}
-                <div className="relative pt-6 border-t border-slate-100 flex justify-center overflow-hidden">
-                    <h2 className="text-[14vw] font-black text-[#0a0f1e]/[0.03] tracking-[-0.05em] leading-none select-none uppercase pointer-events-none">
-                        Xaggment
-                    </h2>
+                {/* ── ANIMATED DUAL-SIDE WATERMARK TEXT (XAGG from Left, MENT from Right) ── */}
+                <div className="relative pt-6 border-t border-slate-100 flex justify-center items-center overflow-hidden">
+                    <div className="text-[14vw] font-black text-[#0a0f1e]/[0.03] tracking-[-0.05em] leading-none select-none uppercase pointer-events-none flex items-center justify-center">
+                        <motion.span
+                            initial={{ x: -160, opacity: 0 }}
+                            whileInView={{ x: 0, opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                            className="inline-block"
+                        >
+                            XAGG
+                        </motion.span>
+                        <motion.span
+                            initial={{ x: 160, opacity: 0 }}
+                            whileInView={{ x: 0, opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                            className="inline-block"
+                        >
+                            MENT
+                        </motion.span>
+                    </div>
                 </div>
 
                 {/* Bottom Bar */}
