@@ -4,14 +4,13 @@ import type { Variants } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 
-// ── Verified real projects only ────────────────────────────────────────────────
 const projects = [
     {
         title: 'Trinity Public School',
         client: 'Trinity Public School',
         industry: 'Education',
-        challenge: 'A CBSE-affiliated school needed a modern online presence with digital admissions, event listings and a career portal.',
-        built: 'Full school website with online admissions, events management, gallery, FAQs and career portal.',
+        challenge: 'Modern CBSE school presence with digital admissions, events and career portal.',
+        built: 'School portal, online admissions, notice board, career portal.',
         url: 'https://trinitypublicschool.org/',
         tagColor: 'bg-amber-100 text-amber-700',
         gradientFrom: 'hsl(40, 90%, 55%)',
@@ -22,8 +21,8 @@ const projects = [
         title: 'Wet Pets',
         client: 'Wet Pets',
         industry: 'E-Commerce',
-        challenge: 'An aquarium store in Kolkata needed a product catalogue with WhatsApp ordering for ornamental fish and accessories.',
-        built: 'E-commerce store with product catalogue, WhatsApp ordering flow and Kolkata-specific SEO.',
+        challenge: 'Aquarium store in Kolkata needing product catalogue with WhatsApp ordering.',
+        built: 'E-commerce store, product catalogue, WhatsApp checkout.',
         url: 'https://wetpets.store/',
         tagColor: 'bg-blue-100 text-blue-700',
         gradientFrom: 'hsl(210, 90%, 50%)',
@@ -34,8 +33,8 @@ const projects = [
         title: 'North Point Tours',
         client: 'North Point Tours & Travels',
         industry: 'Travel',
-        challenge: 'A premium tour & travel agency needed a website to showcase customized packages, hotel listings and upcoming tours.',
-        built: 'Travel website with tour packages, hotel/homestay listings, car rental options and upcoming tour calendar.',
+        challenge: 'Tour agency website showcasing custom packages and booking flow.',
+        built: 'Tour package catalogue, homestay listings, booking flow.',
         url: 'https://www.northpointtour.com/',
         tagColor: 'bg-emerald-100 text-emerald-700',
         gradientFrom: 'hsl(150, 70%, 40%)',
@@ -46,18 +45,18 @@ const projects = [
 
 const getCardVariants = (isEven: boolean): Variants => ({
     offscreen: {
-        y: 120,
+        y: 60,
         opacity: 0,
-        rotate: isEven ? -8 : 8,
+        rotate: isEven ? -4 : 4,
     },
     onscreen: {
         y: 0,
         opacity: 1,
-        rotate: isEven ? -1.5 : 1.5,
+        rotate: isEven ? -1 : 1,
         transition: {
             type: 'spring',
-            bounce: 0.35,
-            duration: 0.9,
+            bounce: 0.3,
+            duration: 0.8,
         },
     },
 });
@@ -89,67 +88,52 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             viewport={{ once: true, amount: 0.2 }}
             className="relative"
         >
-            {/* Colored background splash (adapted from Motion Ref #2) */}
             <div
-                className="absolute inset-0 rounded-3xl opacity-20 -z-10 blur-2xl"
+                className="absolute inset-0 rounded-2xl opacity-15 -z-10 blur-xl"
                 style={{ background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})` }}
                 aria-hidden="true"
             />
 
             <motion.div
                 variants={variants}
-                className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 group"
-                whileHover={{ rotate: 0, scale: 1.01, transition: { duration: 0.3 } }}
+                className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col h-full"
+                whileHover={{ rotate: 0, y: -2, transition: { duration: 0.2 } }}
             >
-                {/* Project Image */}
-                <div className="relative aspect-[16/9] overflow-hidden">
+                {/* Image Aspect ratio scaled down for compactness */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
                     <img
                         src={image}
                         alt={`${client} website`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                    <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${tagColor}`}>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    <div className={`absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${tagColor}`}>
                         {industry}
                     </div>
-                    <a
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute top-4 right-4 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-slate-50"
-                        aria-label={`Visit ${client} website`}
-                    >
-                        <ExternalLink size={15} className="text-[#0a0f1e]" />
-                    </a>
                 </div>
 
-                {/* Project Details */}
-                <div className="p-7 md:p-8">
-                    <p className="eyebrow-label mb-1">{client}</p>
-                    <h3 className="card-title mb-4">{title}</h3>
-
-                    <div className="space-y-3 mb-6">
-                        <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Challenge</p>
-                            <p className="text-sm text-slate-600 font-medium leading-relaxed">{challenge}</p>
-                        </div>
-                        <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">What we built</p>
-                            <p className="text-sm text-slate-600 font-medium leading-relaxed">{built}</p>
-                        </div>
+                {/* Card Content */}
+                <div className="p-5 flex flex-col flex-1 justify-between">
+                    <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">{client}</p>
+                        <h3 className="text-base font-bold text-[#0a0f1e] mb-2 leading-snug">{title}</h3>
+                        <p className="text-xs text-slate-500 font-medium leading-relaxed mb-3 line-clamp-2">{challenge}</p>
                     </div>
 
-                    <a
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-bold text-[#0a0f1e] hover:gap-4 transition-all duration-300"
-                        aria-label={`View ${client} live website`}
-                    >
-                        View live site
-                        <ExternalLink size={14} />
-                    </a>
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span className="text-[11px] font-semibold text-slate-600 truncate max-w-[170px]">{built}</span>
+                        <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors flex-shrink-0"
+                            aria-label={`Visit ${client} website`}
+                        >
+                            Live site
+                            <ExternalLink size={12} />
+                        </a>
+                    </div>
                 </div>
             </motion.div>
         </motion.div>
@@ -158,15 +142,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
 const SelectedWorkSection: React.FC = () => {
     return (
-        <section id="work" className="py-20 md:py-28 px-6 bg-white">
+        <section id="work" className="py-16 md:py-24 px-6 bg-white">
             <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-14">
+                <div className="text-center mb-10 md:mb-14">
                     <motion.p
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="eyebrow-label mb-3"
+                        className="eyebrow-label mb-2"
                     >
                         Selected work
                     </motion.p>
@@ -175,32 +158,29 @@ const SelectedWorkSection: React.FC = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="section-title mb-4"
+                        className="section-title mb-3"
                     >
-                        Real businesses.
-                        <br className="hidden md:block" /> Real results.
+                        Real businesses. Real results.
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="body-text max-w-lg mx-auto"
+                        className="body-text max-w-md mx-auto text-sm md:text-base"
                     >
-                        Here's what we've built for real clients — websites that are live, working and growing.
+                        Here is what we've built for real clients — websites that are live, working and growing.
                     </motion.p>
                 </div>
 
-                {/* Project Cards with scroll animation from Motion Reference #2 */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                     {projects.map((project, idx) => (
                         <ProjectCard key={idx} {...project} index={idx} />
                     ))}
                 </div>
 
-                {/* View all CTA */}
                 <motion.div
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="text-center"
@@ -208,10 +188,10 @@ const SelectedWorkSection: React.FC = () => {
                     <Link
                         to="/work"
                         id="selected-work-view-all"
-                        className="inline-flex items-center gap-2 bg-[#0a0f1e] hover:bg-black text-white font-bold px-8 py-4 rounded-full transition-all duration-300 text-sm hover:gap-4 shadow-lg"
+                        className="inline-flex items-center gap-2 bg-[#0a0f1e] hover:bg-blue-600 text-white font-bold px-7 py-3 rounded-full transition-all duration-300 text-xs shadow-md"
                     >
-                        View All Work
-                        <ArrowRight size={16} />
+                        <span>VIEW ALL WORK</span>
+                        <ArrowRight size={14} />
                     </Link>
                 </motion.div>
             </div>
