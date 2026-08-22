@@ -39,51 +39,60 @@ const HeroSection: React.FC = () => {
 
                 {/* ── FOUNDER IMAGE + FLOATING BADGE ── */}
                 <div className="relative flex justify-center w-full">
-                    {/* Badge above/beside the founder — top right of image */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 24 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute top-[8%] right-[5%] md:right-[12%] z-30 flex items-center gap-2"
-                    >
-                        {/* Pencil-sketched curved arrow (black, pointing down-left toward badge) */}
-                        <motion.svg
-                            width="52"
-                            height="44"
-                            viewBox="0 0 52 44"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="text-[#0a0f1e] flex-shrink-0 -mr-2"
-                            initial={{ opacity: 0, pathLength: 0 }}
-                            animate={{ opacity: 1, pathLength: 1 }}
-                            transition={{ delay: 0.7, duration: 0.8 }}
-                        >
-                            <motion.path
-                                d="M 46 4 C 42 12, 28 16, 16 30 M 16 30 L 10 22 M 16 30 L 22 36"
-                                stroke="currentColor"
-                                strokeWidth="2.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                initial={{ pathLength: 0 }}
-                                animate={{ pathLength: 1 }}
-                                transition={{ delay: 0.7, duration: 0.8, ease: 'easeInOut' }}
-                            />
-                        </motion.svg>
 
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.55, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                            className="bg-white border-2 border-[#0a0f1e] rounded-full px-4 py-2 shadow-md whitespace-nowrap"
-                        >
+                    {/* Badge — positioned top-right, separate from arrow */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute top-[6%] right-[4%] md:right-[10%] lg:right-[15%] z-30"
+                    >
+                        <div className="bg-white border-2 border-[#0a0f1e] rounded-full px-4 py-2 shadow-md whitespace-nowrap">
                             <div className="flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
                                 <span className="text-xs font-semibold text-[#0a0f1e] tracking-tight">
                                     Digital Product &amp; Growth Partner
                                 </span>
                             </div>
-                        </motion.div>
+                        </div>
                     </motion.div>
+
+                    {/* Hand-drawn curved arrow — starts below the badge, curves down-left toward the founder's shoulder */}
+                    {/* Drawn as a separate absolute element so it isn't in a flex row with the badge */}
+                    <motion.svg
+                        width="70"
+                        height="70"
+                        viewBox="0 0 70 70"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="absolute top-[14%] right-[18%] md:right-[24%] lg:right-[28%] z-30 text-[#0a0f1e] hidden sm:block"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.75, duration: 0.3 }}
+                    >
+                        {/* Curved path: starts top-right (near badge), curves down and to the left (toward founder shoulder) */}
+                        <motion.path
+                            d="M 55 8 C 50 25, 35 45, 18 58"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            fill="none"
+                            initial={{ pathLength: 0 }}
+                            animate={{ pathLength: 1 }}
+                            transition={{ delay: 0.8, duration: 0.9, ease: 'easeInOut' }}
+                        />
+                        {/* Arrowhead at the bottom end (18, 58) pointing down-left */}
+                        <motion.path
+                            d="M 18 58 L 10 52 M 18 58 L 24 65"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            initial={{ pathLength: 0, opacity: 0 }}
+                            animate={{ pathLength: 1, opacity: 1 }}
+                            transition={{ delay: 1.55, duration: 0.25 }}
+                        />
+                    </motion.svg>
 
                     {/* Founder Image — moderate size, fading bottom so heading overlaps naturally */}
                     <motion.div
