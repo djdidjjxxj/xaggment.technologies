@@ -61,19 +61,8 @@ const Founder: React.FC = () => {
 
                         <div className="pt-8 flex items-center gap-6">
                             <div>
-                                <h4 className="text-2xl font-bold">Xaggment</h4>
-                                <p className="text-brand-teal font-semibold">Founder & CEO</p>
-                            </div>
-                            <div className="h-12 w-[2px] bg-white/10" />
-                            <div className="flex gap-4">
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold">50+</div>
-                                    <p className="text-xs text-slate-400 uppercase">Brands Scaled</p>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold">1M+</div>
-                                    <p className="text-xs text-slate-400 uppercase">Hours Saved</p>
-                                </div>
+                                <h4 className="text-2xl font-bold">Kaustav</h4>
+                                <p className="text-brand-teal font-semibold">Founder &amp; CEO, Xaggment Technologies</p>
                             </div>
                         </div>
                     </div>

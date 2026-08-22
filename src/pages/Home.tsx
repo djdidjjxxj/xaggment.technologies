@@ -1,70 +1,56 @@
 import React from 'react';
-import Hero from '@/sections/Hero';
-import LogosSection from '@/sections/LogosSection';
-import Services from '@/sections/Services';
-import Portfolio from '@/sections/Portfolio';
-import Team from '@/sections/Team';
-import Blog from '@/sections/Blog';
-import Roadmap from '@/sections/Roadmap';
-import Testimonials from '@/sections/Testimonials';
-
-// Pricing sections
-import WebsiteDevelopmentSection from '@/sections/Pricing/WebsiteDevelopmentSection';
-import WebsiteMaintenanceSection from '@/sections/Pricing/WebsiteMaintenanceSection';
-import DigitalMarketingSection from '@/sections/Pricing/DigitalMarketingSection';
-import ComboPlansSection from '@/sections/Pricing/ComboPlansSection';
-import CustomDevelopmentSection from '@/sections/Pricing/CustomDevelopmentSection';
-import WhyChooseUsSection from '@/sections/Pricing/WhyChooseUsSection';
-import FAQSection from '@/sections/Pricing/FAQSection';
-import CTASection from '@/sections/Pricing/CTASection';
-
-const SectionDivider: React.FC<{ label: string; sublabel: string }> = ({ label, sublabel }) => (
-    <div id={label.toLowerCase().replace(/\s+/g, '-')} className="py-10 px-6 bg-slate-50 border-y border-slate-100">
-        <div className="max-w-7xl mx-auto flex items-center gap-6">
-            <div className="flex-shrink-0">
-                <div className="w-1 h-12 bg-blue-600 rounded-full" />
-            </div>
-            <div>
-                <p className="text-xs font-black uppercase tracking-widest text-blue-600 mb-0.5">{sublabel}</p>
-                <h3 className="text-2xl md:text-3xl font-black text-[#0f172a] tracking-tight">{label}</h3>
-            </div>
-        </div>
-    </div>
-);
+import { Helmet } from 'react-helmet-async';
+import HeroSection from '@/sections/home/HeroSection';
+import TrustStrip from '@/sections/home/TrustStrip';
+import WhatWeDoSection from '@/sections/home/WhatWeDoSection';
+import OutcomesSection from '@/sections/home/OutcomesSection';
+import SelectedWorkSection from '@/sections/home/SelectedWorkSection';
+import HowWeWorkSection from '@/sections/home/HowWeWorkSection';
+import PricingPreviewSection from '@/sections/home/PricingPreviewSection';
+import WhyXaggmentSection from '@/sections/home/WhyXaggmentSection';
+import FAQSection from '@/sections/home/FAQSection';
+import FinalCTASection from '@/sections/home/FinalCTASection';
 
 const Home: React.FC = () => {
     return (
-        <main className="min-h-screen bg-white dark:bg-slate-950">
-            <Hero />
-            <LogosSection />
-            <Services />
-            <Portfolio />
+        <>
+            <Helmet>
+                <title>Xaggment Technologies | Web Development, Software, AI &amp; Digital Growth</title>
+                <meta name="description" content="Xaggment Technologies is your digital product and growth partner — building websites, software, SaaS, AI automation and delivering digital marketing for ambitious businesses." />
+            </Helmet>
 
-            {/* ── DEVELOPMENT PRICING ── */}
-            <SectionDivider label="Website Development Plans" sublabel="Pricing · Development" />
-            <WebsiteDevelopmentSection />
+            <main className="min-h-screen bg-white text-[#0a0f1e]">
+                {/* 01 Hero */}
+                <HeroSection />
 
-            <SectionDivider label="Website Maintenance Plans" sublabel="Pricing · Maintenance" />
-            <WebsiteMaintenanceSection />
+                {/* 02 Selected Clients / Trust */}
+                <TrustStrip />
 
-            {/* ── MARKETING PRICING ── */}
-            <SectionDivider label="Digital Marketing Plans" sublabel="Pricing · Marketing" />
-            <DigitalMarketingSection />
+                {/* 03 What We Do */}
+                <WhatWeDoSection />
 
-            {/* ── COMBO PLANS ── */}
-            <SectionDivider label="Combo Plans" sublabel="Pricing · Best Value" />
-            <ComboPlansSection />
+                {/* 04 Business Outcomes */}
+                <OutcomesSection />
 
-            <CustomDevelopmentSection />
-            <WhyChooseUsSection />
-            <FAQSection />
+                {/* 05 Selected Work (Motion Ref #2 spring scroll animation) */}
+                <SelectedWorkSection />
 
-            <Team />
-            <Blog />
-            <Roadmap />
-            <Testimonials />
-            <CTASection />
-        </main>
+                {/* 06 How We Work */}
+                <HowWeWorkSection />
+
+                {/* 07 Pricing Snapshot (Motion Ref #1 shared layout tab animation) */}
+                <PricingPreviewSection />
+
+                {/* 08 Why Xaggment / Founder Trust */}
+                <WhyXaggmentSection />
+
+                {/* 09 FAQ */}
+                <FAQSection />
+
+                {/* 10 Final CTA */}
+                <FinalCTASection />
+            </main>
+        </>
     );
 };
 

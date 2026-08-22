@@ -12,9 +12,9 @@ import { routes } from './routes';
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
 
-    // Safety net: always show content after 4 seconds even if Loader animation fails
+    // Safety net: always show content after 1.8 seconds even if Loader animation fails
     useEffect(() => {
-        const fallback = setTimeout(() => setLoading(false), 4000);
+        const fallback = setTimeout(() => setLoading(false), 1800);
         return () => clearTimeout(fallback);
     }, []);
 

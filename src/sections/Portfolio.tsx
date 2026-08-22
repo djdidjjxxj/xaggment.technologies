@@ -35,27 +35,27 @@ const featuredProjects = [
 
 const moreProjects = [
     {
-        title: 'Lal Sweets',
-        description: 'E-commerce website for a traditional sweets store.',
-        url: '#',
+        title: 'E-Commerce Platform',
+        description: 'E-commerce solution with custom catalogue, payment processing and inventory integration.',
+        url: '/contact',
         fallbackImage: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80',
         tag: 'E-Commerce',
         tagColor: 'bg-rose-100 text-rose-700',
     },
     {
-        title: 'Kirtilals',
-        description: 'Luxury jewellery store with premium UX for high-end buyers.',
-        url: '#',
+        title: 'Luxury Retail Portal',
+        description: 'Luxury store portal with responsive showcase and customer enquiry workflow.',
+        url: '/contact',
         fallbackImage: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80',
         tag: 'Luxury',
         tagColor: 'bg-yellow-100 text-yellow-700',
     },
     {
-        title: 'Tradescribe',
-        description: 'AI-powered trading journal and analytics platform.',
-        url: '#',
+        title: 'SaaS Analytics Platform',
+        description: 'Analytics dashboard and workflow integration for digital businesses.',
+        url: '/contact',
         fallbackImage: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80',
-        tag: 'FinTech',
+        tag: 'SaaS / Web App',
         tagColor: 'bg-purple-100 text-purple-700',
     },
 ];

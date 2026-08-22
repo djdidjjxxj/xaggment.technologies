@@ -1,96 +1,82 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
+import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { openWhatsApp } from '@/utils/whatsapp';
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-white pt-24 pb-12 px-6 relative overflow-hidden">
+        <footer className="bg-[#0a0f1e] text-white pt-20 pb-10 px-6 relative overflow-hidden border-t border-white/10" aria-label="Site footer">
             <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
-                    {/* Left Column: Contact & Newsletter */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                        viewport={{ once: true }}
-                        className="space-y-10"
-                    >
-                        <div className="space-y-4">
-                            <p className="text-slate-400 font-bold text-lg">Contact us at</p>
-                            <a
-                                href="mailto:hello@xaggment.com"
-                                className="text-3xl md:text-4xl font-black text-[#0f172a] hover:opacity-70 transition-opacity"
-                            >
-                                hello@xaggment.com
-                            </a>
-                        </div>
-
-                        <div className="relative max-w-md group">
-                            <div className="flex items-center p-2 rounded-full border border-slate-200 bg-white shadow-sm focus-within:border-slate-400 transition-all">
-                                <input
-                                    type="email"
-                                    placeholder="Enter your email address"
-                                    className="flex-1 bg-transparent px-6 py-3 outline-none text-slate-600 font-medium placeholder:text-slate-300"
-                                />
-                                <button className="bg-[#000] text-white px-8 py-3 rounded-full font-black text-sm hover:scale-[0.98] transition-transform">
-                                    Subscribe
-                                </button>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+                    {/* Brand Column */}
+                    <div className="lg:col-span-2 space-y-4">
+                        <div className="flex items-center gap-2.5">
+                            <div className="w-8 h-8 bg-white text-[#0a0f1e] rounded-lg flex items-center justify-center font-black text-sm">
+                                X
                             </div>
+                            <span className="text-xl font-bold tracking-tighter uppercase text-white">XAGGMENT</span>
                         </div>
-                    </motion.div>
+                        <p className="text-white/60 text-sm font-medium leading-relaxed max-w-sm">
+                            Digital product &amp; growth partner for ambitious businesses. We build websites, software, SaaS platforms, AI automation, and digital marketing strategies that deliver real business outcomes.
+                        </p>
+                        <div className="pt-2 flex items-center gap-4 text-xs font-bold text-white/50">
+                            <span>Kolkata, India</span>
+                            <span>•</span>
+                            <button
+                                onClick={() => openWhatsApp('Hi Xaggment!')}
+                                className="text-emerald-400 hover:underline"
+                            >
+                                WhatsApp Support
+                            </button>
+                        </div>
+                    </div>
 
-                    {/* Right Column: Links */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                        viewport={{ once: true }}
-                        className="grid grid-cols-2 gap-12"
-                    >
-                        <div className="space-y-6">
-                            <h4 className="text-slate-400 font-black text-sm uppercase tracking-widest">Links</h4>
-                            <ul className="space-y-4">
-                                {['Home', 'Prebuilt', 'Customized', 'About Us', 'Contact'].map((item) => (
-                                    <li key={item}>
-                                        <button className="text-[#0f172a] font-bold hover:opacity-50 transition-opacity">
-                                            {item}
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="space-y-6">
-                            <h4 className="text-slate-400 font-black text-sm uppercase tracking-widest">More Resources</h4>
-                            <ul className="space-y-4">
-                                {['Blogs', 'Terms & Conditions', 'Privacy Policy', 'Refund Policy'].map((item) => (
-                                    <li key={item}>
-                                        <button className="text-[#0f172a] font-bold hover:opacity-50 transition-opacity">
-                                            {item}
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </motion.div>
+                    {/* Navigation Links */}
+                    <div className="space-y-4">
+                        <h4 className="text-xs font-black uppercase tracking-widest text-white/40">Explore</h4>
+                        <ul className="space-y-2.5 text-sm font-medium text-white/70">
+                            <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+                            <li><Link to="/services" className="hover:text-white transition-colors">Services</Link></li>
+                            <li><Link to="/work" className="hover:text-white transition-colors">Work / Portfolio</Link></li>
+                            <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                            <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+                            <li><Link to="/insights" className="hover:text-white transition-colors">Insights &amp; Blog</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Services Links */}
+                    <div className="space-y-4">
+                        <h4 className="text-xs font-black uppercase tracking-widest text-white/40">Services</h4>
+                        <ul className="space-y-2.5 text-sm font-medium text-white/70">
+                            <li><Link to="/services/web-development" className="hover:text-white transition-colors">Web Development</Link></li>
+                            <li><Link to="/services/software-development" className="hover:text-white transition-colors">Software &amp; SaaS</Link></li>
+                            <li><Link to="/services/ai-automation" className="hover:text-white transition-colors">AI Automation</Link></li>
+                            <li><Link to="/services/digital-marketing" className="hover:text-white transition-colors">Digital Marketing</Link></li>
+                            <li><Link to="/contact" className="hover:text-white transition-colors">Custom Development</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Contact & Legal */}
+                    <div className="space-y-4">
+                        <h4 className="text-xs font-black uppercase tracking-widest text-white/40">Legal &amp; Contact</h4>
+                        <ul className="space-y-2.5 text-sm font-medium text-white/70">
+                            <li><Link to="/contact" className="hover:text-white transition-colors font-bold text-white">Start a Project →</Link></li>
+                            <li><a href="mailto:hello@xaggment.com" className="hover:text-white transition-colors">hello@xaggment.com</a></li>
+                            <li><Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                            <li><Link to="/terms" className="hover:text-white transition-colors">Terms &amp; Conditions</Link></li>
+                            <li><Link to="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link></li>
+                        </ul>
+                    </div>
                 </div>
 
-                {/* Large Watermark Text */}
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                    viewport={{ once: true }}
-                    className="relative mt-20 pt-10 border-t border-slate-50 flex justify-center overflow-hidden"
-                >
-                    <h2 className="text-[12vw] font-black text-[#0f172a]/[0.03] tracking-[-0.05em] leading-none select-none uppercase pointer-events-none">
-                        Xaggment
-                    </h2>
-                </motion.div>
-
-                <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-300 uppercase tracking-widest">
-                    <p>© 2026 Xaggment Technologies. All rights reserved.</p>
-                    <div className="flex gap-8">
-                        <button className="hover:text-slate-500 transition-colors">Privacy Policy</button>
-                        <button className="hover:text-slate-500 transition-colors">Terms of Service</button>
+                {/* Bottom Bar */}
+                <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-white/40">
+                    <p>© {new Date().getFullYear()} Xaggment Technologies. All rights reserved.</p>
+                    <div className="flex gap-6">
+                        <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+                        <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
+                        <Link to="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 import { supabase } from '@/db/supabase';
 import { format } from 'date-fns';
 import { ArrowLeft, Clock, User } from 'lucide-react';
@@ -16,33 +17,33 @@ interface BlogPost {
     published_at: string;
 }
 
-const mockPosts = [
+const mockPosts: BlogPost[] = [
     {
         id: '1',
-        title: 'Building Scalable AI Automation Workflows',
-        excerpt: 'Learn how to integrate AI agents into your business processes to save time, reduce error rates, and streamline operation efficiency.',
-        content: 'AI is redefining how businesses operate. From automating customer support to optimizing supply chain logistics, intelligent agents can handle complex tasks faster and with lower error rates than traditional manual workflows.\n\nBy leveraging tools like LangChain, custom GPT agents, and workflow builders like Make or n8n, developers can design autonomous workflows that orchestrate tasks across multiple APIs.\n\nIn this article, we outline the exact step-by-step process of designing, testing, and deploying custom AI agent scripts in production environments.',
-        thumbnail_url: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=600&auto=format&fit=crop',
+        title: 'Why I Started Xaggment — A Founder\'s Honest Story',
+        excerpt: 'Most agencies sell you a dream. I started Xaggment because I was tired of watching small businesses get overcharged for average work. Here\'s the raw truth about why we exist and what we\'re actually building.',
+        content: 'Most agencies sell you a dream. I started Xaggment Technologies because I was tired of watching small business owners and founders get overcharged for average work and overcomplicated tech jargon.\n\nOur philosophy is simple: build reliable digital systems, automate repetitive operations, and drive ongoing growth. No fluff, no fabricated claims — just honest, high-quality work.\n\nWhen you work with Xaggment, you get a real partner invested in your bottom line. We prioritize business outcomes — leads, revenue, and efficiency — over vanity metrics.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600&auto=format&fit=crop',
         author: 'Kaustav',
-        published_at: new Date().toISOString()
+        published_at: '2025-07-15T10:00:00.000Z'
     },
     {
         id: '2',
-        title: 'The Future of SaaS in 2026',
-        excerpt: 'An in-depth look at emerging software architectures, microservices, and how prebuilt platforms can accelerate your startup launch.',
-        content: 'In 2026, software development is highly commoditized. Building a startup from scratch no longer takes months; instead, founders are utilizing robust prebuilt boilerplate architectures and templates to launch within days.\n\nThis article reviews the main architectural styles used by modern fast-scaling startups, including Next.js, serverless database adapters, and unified identity backends. We highlight how to select the best tech stack for rapid product development.',
-        thumbnail_url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
-        author: 'Alex Johnson',
-        published_at: new Date(Date.now() - 86400000 * 2).toISOString()
+        title: 'The ₹30,000 Website vs the ₹3 Lakh Website — What Actually Differs?',
+        excerpt: 'I\'ve seen both ends of the spectrum. A client once paid ₹3 lakhs for a website that crashed in 2 weeks. Another paid ₹30,000 and scaled to 10,000 monthly visitors. The difference isn\'t the price — here\'s what it really is.',
+        content: 'I\'ve seen both ends of the spectrum in web development. A client once paid ₹3 lakhs to a traditional agency for a bloated website that crashed under initial traffic. Another client paid ₹30,000 for a clean, optimized web setup and scaled to 10,000 monthly visitors.\n\nThe difference isn\'t the price tag — it is the architecture, optimization, and conversion strategy behind the build.\n\nKey factors that determine real website value:\n1. Mobile Responsiveness & Speed Optimization\n2. Clear Conversion Funnels & Contact Flow\n3. Clean Code & Fast Server Infrastructure\n4. Search Engine Accessibility & SEO Structure',
+        thumbnail_url: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=600&auto=format&fit=crop',
+        author: 'Kaustav',
+        published_at: '2025-06-20T10:00:00.000Z'
     },
     {
         id: '3',
-        title: 'A Beginners Guide to Creator Growth',
-        excerpt: 'Discover the marketing channels, design languages, and content pipelines that successful creators use to scale their reach rapidly.',
-        content: 'Scaling an online audience requires consistency and structured workflows. The creators who succeed are those who treat their platform like a product development cycle.\n\nFrom automated rendering of vertical video reels to high-converting landing pages, this guide explores the essential stack of growth tools, SEO best practices, and distribution strategies that you can implement starting today.',
-        thumbnail_url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop',
-        author: 'Sarah Smith',
-        published_at: new Date(Date.now() - 86400000 * 5).toISOString()
+        title: 'AI Automation Is Not the Future — It\'s Already Happening to Your Competitors',
+        excerpt: 'While you\'re manually replying to leads, your competitor\'s AI bot has already qualified them, sent a proposal, and followed up twice. I\'ll show you exactly what automation looks like in 2025 for small businesses.',
+        content: 'Artificial Intelligence and business automation are no longer future possibilities — they are active operational advantages being deployed today.\n\nWhile traditional businesses spend hours manually copying lead information or drafting routine replies, automated workflows handle lead qualification, instantly send WhatsApp proposals, and route qualified opportunities to calendars.\n\nAt Xaggment, we design custom AI agents and workflow automations that integrate directly with existing tools like CRMs, WhatsApp, email, and databases to cut manual work and accelerate response times.',
+        thumbnail_url: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=600&auto=format&fit=crop',
+        author: 'Kaustav',
+        published_at: '2025-05-10T10:00:00.000Z'
     }
 ];
 
@@ -100,6 +101,15 @@ const BlogDetail: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-white pt-40 pb-24">
+            <Helmet>
+                <title>{`${post.title} | Xaggment Technologies`}</title>
+                <meta name="description" content={post.excerpt} />
+                <meta property="og:title" content={`${post.title} | Xaggment Technologies`} />
+                <meta property="og:description" content={post.excerpt} />
+                <meta property="og:image" content={post.thumbnail_url} />
+                <meta property="og:type" content="article" />
+                <link rel="canonical" href={`https://kaustav-exe.github.io/xaggment.technologies/insights/${post.id}`} />
+            </Helmet>
             <article className="max-w-4xl mx-auto px-6">
                 <Button
                     variant="ghost"
