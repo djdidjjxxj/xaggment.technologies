@@ -141,90 +141,74 @@ const HeroSection: React.FC = () => {
                 {/* ════════════════════════════════════════════════════════════
                     MOBILE HERO  (visible only below md breakpoint)
                     ════════════════════════════════════════════════════════════
-                    Layout:
-                      1. Large founder image (78% of content width)
-                      2. Handwritten editorial annotation at chest level
-                         — no badge, no pill, no container
-                         — arrow originates from founder's right shoulder
-                      3. Heading clearly separated below the composition
+                    Layout: flex ROW
+                      Left  (60%): Founder image
+                      Right (40%): Handwritten annotation beside the image
+                                   — NOT on top of the body
+                      Below: Heading pulled up with -mt to close the gap
                     ════════════════════════════════════════════════════════════ */}
-                <div className="md:hidden w-full flex flex-col items-center px-4">
+                <div className="md:hidden w-full flex flex-col items-center px-3">
 
-                    {/* Founder image — large on mobile (78% width) */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 14 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                        className="relative mx-auto"
-                        style={{ width: '78%', maxWidth: '320px' }}
-                    >
-                        <img
-                            src={FOUNDER_IMG}
-                            alt="Kaustav — Founder & CEO of Xaggment Technologies"
-                            className="w-full h-auto object-cover object-top"
-                            loading="eager"
-                            style={{
-                                /*
-                                 * Fade starts at 65% so the chest area (annotation zone) is
-                                 * fully visible; bottom fades cleanly into the heading below.
-                                 */
-                                maskImage: 'linear-gradient(to bottom, black 65%, transparent 92%)',
-                                WebkitMaskImage: 'linear-gradient(to bottom, black 65%, transparent 92%)',
-                            }}
-                        />
+                    {/* ── Flex row: Image | Annotation ── */}
+                    <div className="flex items-start justify-center w-full gap-0">
 
-                        {/*
-                         * HANDWRITTEN ANNOTATION
-                         * ──────────────────────
-                         * Positioned at: top 52% (chest/upper-torso area), left 44%
-                         * — well above the fade zone (starts at 65%)
-                         * — sits to the right of centre so it doesn't cover the face
-                         *
-                         * The SVG arrow extends UP and to the LEFT from this anchor point.
-                         * It traces a natural curve back toward the founder's right shoulder
-                         * (viewer's left: approx top 32%, left 28% of image).
-                         *
-                         * In annotation-relative coords the SVG spans:
-                         *   width 68px, height 80px
-                         *   positioned top:-80px left:-68px (upper-left of anchor)
-                         *
-                         * Arrow path: (8,8) → curve → (58,72)  [shoulder → text]
-                         * Arrowhead at (58,72) pointing lower-right
-                         */}
-                        <div
-                            className="absolute z-20"
-                            style={{ top: '52%', left: '44%' }}
+                        {/* LEFT: Founder image — 60% of the row */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 14 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative flex-shrink-0"
+                            style={{ width: '60%' }}
                         >
-                            {/* SVG arrow: shoulder → annotation text */}
+                            <img
+                                src={FOUNDER_IMG}
+                                alt="Kaustav — Founder & CEO of Xaggment Technologies"
+                                className="w-full h-auto object-cover object-top"
+                                loading="eager"
+                                style={{
+                                    maskImage: 'linear-gradient(to bottom, black 62%, transparent 90%)',
+                                    WebkitMaskImage: 'linear-gradient(to bottom, black 62%, transparent 90%)',
+                                }}
+                            />
+
+                            {/*
+                              Arrow SVG — originates from founder's right shoulder
+                              (which is viewer's LEFT shoulder = left side of image,
+                               ~40% from top, ~68% from left edge of image).
+                              Arrow curves from that shoulder point outward to the RIGHT,
+                              into the annotation div beside the image.
+                              SVG has overflow:visible so it crosses the image boundary.
+                            */}
                             <motion.svg
-                                width="68"
-                                height="80"
-                                viewBox="0 0 68 80"
+                                width="52"
+                                height="42"
+                                viewBox="0 0 52 42"
                                 fill="none"
                                 style={{
                                     position: 'absolute',
-                                    top: '-80px',
-                                    left: '-68px',
+                                    top: '33%',
+                                    right: '-40px',
                                     overflow: 'visible',
+                                    zIndex: 20,
                                 }}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                transition={{ delay: 0.55, duration: 0.2 }}
+                                transition={{ delay: 0.6 }}
                             >
-                                {/* Main curve: from shoulder area (upper-left) to annotation (lower-right) */}
+                                {/* Curve from left (inside image, shoulder area) to right (annotation) */}
                                 <motion.path
-                                    d="M 8 8 C 18 28, 38 52, 58 72"
+                                    d="M 4 30 C 12 16, 28 8, 48 16"
                                     stroke="#0a0f1e"
                                     strokeWidth="1.4"
                                     strokeLinecap="round"
                                     fill="none"
                                     initial={{ pathLength: 0 }}
                                     animate={{ pathLength: 1 }}
-                                    transition={{ delay: 0.7, duration: 0.85, ease: 'easeInOut' }}
+                                    transition={{ delay: 0.8, duration: 0.8, ease: 'easeInOut' }}
                                 />
-                                {/* Arrowhead at (58, 72) — two short strokes forming a V */}
+                                {/* Arrowhead at (48, 16) pointing right */}
                                 <motion.path
-                                    d="M 49 66 L 58 72 L 52 80"
+                                    d="M 40 9 L 48 16 L 40 22"
                                     stroke="#0a0f1e"
                                     strokeWidth="1.4"
                                     strokeLinecap="round"
@@ -235,41 +219,49 @@ const HeroSection: React.FC = () => {
                                     transition={{ delay: 1.5, duration: 0.22 }}
                                 />
                             </motion.svg>
+                        </motion.div>
 
-                            {/*
-                             * Handwritten text
-                             * ─────────────────
-                             * Font: Caveat (Google Fonts) — elegant editorial handwriting
-                             * No background, no border, no pill, no container — just text.
-                             * Slight −2° tilt for natural hand-written feel.
-                             */}
+                        {/*
+                          RIGHT: Handwritten annotation
+                          paddingTop pushes text down to chest level beside the image.
+                          Using 30vw ≈ ~40% of the image height (image width ≈ 60vw, aspect ~3:4 → height ~80vw; 30vw = 37.5%).
+                          Text appears beside the chest area, arrow arrives from the left (image shoulder).
+                        */}
+                        <div
+                            className="flex-1 z-20"
+                            style={{ paddingTop: '30vw', paddingLeft: '10px' }}
+                        >
                             <motion.div
-                                initial={{ opacity: 0, y: 5 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 1.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                initial={{ opacity: 0, x: 10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 1.15, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                                 style={{
                                     fontFamily: "'Caveat', cursive",
-                                    fontSize: 'clamp(16px, 4.8vw, 20px)',
+                                    fontSize: 'clamp(15px, 4.5vw, 19px)',
                                     fontWeight: 500,
                                     color: '#0a0f1e',
                                     lineHeight: 1.25,
                                     transform: 'rotate(-2deg)',
-                                    transformOrigin: 'top left',
+                                    transformOrigin: 'left top',
                                     display: 'inline-block',
-                                    whiteSpace: 'nowrap',
                                     userSelect: 'none',
                                 }}
                             >
                                 Digital Product &amp;<br />Growth Partner
                             </motion.div>
                         </div>
-                    </motion.div>
+                    </div>
 
-                    {/* ── Heading — clearly below the founder composition, never overlapping ── */}
-                    <div className="w-full text-center mt-10 mb-0">
+                    {/*
+                      Heading — negative margin closes the gap between
+                      the faded image bottom and the heading.
+                      -mt-14 pulls it up into the image fade zone.
+                    */}
+                    <div className="w-full text-center -mt-14 mb-0">
                         <AnimatedHeading startDelay={0.4} />
                     </div>
                 </div>
+
 
                 {/* ════════════════════════════════════════════════════════════
                     DESKTOP HERO  (hidden on mobile, visible from md up)
