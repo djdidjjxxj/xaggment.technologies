@@ -37,17 +37,24 @@ const HeroSection: React.FC = () => {
 
             <div className="max-w-5xl mx-auto w-full relative z-10 flex flex-col items-center">
 
-                {/* ── FOUNDER IMAGE + FLOATING BADGE ── */}
+                {/* ── FOUNDER IMAGE + FLOATING BADGE (chest/arm level, right side) ── */}
                 <div className="relative flex justify-center w-full">
 
-                    {/* Badge — positioned top-right, separate from arrow */}
+                    {/*
+                      Layout:
+                      - Founder image: centered
+                      - Badge: floats to the RIGHT at chest level (~52% down)
+                      - Arrow: a curved pencil-sketch line from the founder's shoulder area curving right toward the badge
+                    */}
+
+                    {/* Badge at CHEST level, right of the founder */}
                     <motion.div
-                        initial={{ opacity: 0, y: -12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute top-[6%] right-[4%] md:right-[10%] lg:right-[15%] z-30"
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.55, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute top-[50%] right-[2%] md:right-[8%] lg:right-[14%] z-30"
                     >
-                        <div className="bg-white border-2 border-[#0a0f1e] rounded-full px-4 py-2 shadow-md whitespace-nowrap">
+                        <div className="bg-white border-2 border-[#0a0f1e] rounded-full px-4 py-2 shadow-lg whitespace-nowrap">
                             <div className="flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
                                 <span className="text-xs font-semibold text-[#0a0f1e] tracking-tight">
@@ -57,40 +64,46 @@ const HeroSection: React.FC = () => {
                         </div>
                     </motion.div>
 
-                    {/* Hand-drawn curved arrow — starts below the badge, curves down-left toward the founder's shoulder */}
-                    {/* Drawn as a separate absolute element so it isn't in a flex row with the badge */}
+                    {/*
+                      Pencil-sketched curved arrow:
+                      - Starts at the LEFT side (from the founder's shoulder/arm area on the image)
+                      - Curves RIGHT and slightly DOWN toward the badge
+                      - Arrowhead points RIGHT toward the badge
+                      - Positioned at the same vertical level as the badge (chest level)
+                    */}
                     <motion.svg
-                        width="70"
-                        height="70"
-                        viewBox="0 0 70 70"
+                        width="80"
+                        height="50"
+                        viewBox="0 0 80 50"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="absolute top-[14%] right-[18%] md:right-[24%] lg:right-[28%] z-30 text-[#0a0f1e] hidden sm:block"
+                        className="absolute top-[49%] right-[calc(2%+155px)] md:right-[calc(8%+155px)] lg:right-[calc(14%+155px)] z-30 text-[#0a0f1e] hidden sm:block"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 0.75, duration: 0.3 }}
+                        transition={{ delay: 0.75, duration: 0.2 }}
                     >
-                        {/* Curved path: starts top-right (near badge), curves down and to the left (toward founder shoulder) */}
+                        {/* Organic curved stroke: from left (shoulder) curving right toward badge */}
                         <motion.path
-                            d="M 55 8 C 50 25, 35 45, 18 58"
+                            d="M 6 38 C 14 20, 38 10, 66 22"
                             stroke="currentColor"
                             strokeWidth="2.5"
                             strokeLinecap="round"
                             fill="none"
                             initial={{ pathLength: 0 }}
                             animate={{ pathLength: 1 }}
-                            transition={{ delay: 0.8, duration: 0.9, ease: 'easeInOut' }}
+                            transition={{ delay: 0.85, duration: 0.85, ease: 'easeInOut' }}
                         />
-                        {/* Arrowhead at the bottom end (18, 58) pointing down-left */}
+                        {/* Arrowhead at right end (66, 22) pointing right toward badge */}
                         <motion.path
-                            d="M 18 58 L 10 52 M 18 58 L 24 65"
+                            d="M 57 14 L 66 22 L 57 30"
                             stroke="currentColor"
                             strokeWidth="2.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
+                            fill="none"
                             initial={{ pathLength: 0, opacity: 0 }}
                             animate={{ pathLength: 1, opacity: 1 }}
-                            transition={{ delay: 1.55, duration: 0.25 }}
+                            transition={{ delay: 1.6, duration: 0.25 }}
                         />
                     </motion.svg>
 
